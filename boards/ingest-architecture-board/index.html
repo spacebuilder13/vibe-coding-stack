@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ingest v3 Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Ingest v3 Architecture Board</h1>
+      <p>Miro-like review board with Mermaid, blueprint, and persistent comments.</p>
+      <div class="toolbar">
+        <button id="zoomIn">Zoom +</button>
+        <button id="zoomOut">Zoom -</button>
+        <button id="resetZoom">Reset</button>
+        <a id="newIssueLink" target="_blank" rel="noreferrer">Open Iteration Issue</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel diagram-panel">
+        <h2>System Diagram</h2>
+        <div id="diagramViewport">
+          <div id="diagramCanvas">
+            <pre id="mermaid" class="mermaid"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel blueprint-panel">
+        <h2>Blueprint</h2>
+        <article id="blueprint"></article>
+      </section>
+
+      <section class="panel comments-panel">
+        <h2>Comments and Questions</h2>
+        <p class="hint">
+          Comments persist via GitHub Discussions using Giscus. If this area is blank, enable
+          Discussions and complete Giscus setup in README.
+        </p>
+        <div id="comments"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

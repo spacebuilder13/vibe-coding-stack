@@ -1,0 +1,47 @@
+%% /ingest v3 architecture
+flowchart TB
+    U["User"] --> G1{"Gate 1: project, identity, context"}
+    G1 -->|confirmed| IW["Ingest worker: ffmpeg normalize and extract"]
+    IW --> EL["ElevenLabs transcription"]
+    EL --> TA["Transcript artifacts: raw, clean, json"]
+
+    TA --> CR{"Context router: rules first, then LLM"}
+    CR -->|high confidence| SYN["Synthesizer: one structured extraction"]
+    CR -->|low confidence| CQ["Clarification questions: max 2"] --> SYN
+
+    SYN --> TMP["Temp output file"]
+    TMP --> META["Write source meta markdown"]
+    META --> AE["Automated evaluator: quality, schema, confidence"]
+    AE --> G2{"Gate 2: digest and confirmation"}
+
+    G2 -->|delete| DEL["Delete source and stop"]
+    G2 -->|keep| W["Parallel writers"]
+
+    W --> IDX["Source index"]
+    W --> REG["Registry entry"]
+    W --> ACT["Actions log"]
+    W --> HO["Handover note"]
+
+    ACT --> TC{"Task policy"}
+    TC -->|create from actions| LIN["Linear MCP issue creation"]
+    TC -->|handover| TMA["Task management agent handover"]
+
+    W --> KU["Knowledge updater"]
+    KU --> KP["Individual knowledge"]
+    KU --> KM["Market knowledge"]
+    KU --> KI["IP knowledge"]
+
+    W --> NLM["Attach source to NotebookLM"]
+    NLM --> DONE["Ingest complete"]
+
+    subgraph OBS["Observability and learning"]
+      RM["Run manifest"]
+      DT["Decision trace"]
+      MT["Metrics: latency, tokens, corrections"]
+      EV["Eval scores and drift checks"]
+    end
+
+    G1 --> RM
+    CR --> DT
+    AE --> EV
+    G2 --> MT
