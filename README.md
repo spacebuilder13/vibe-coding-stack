@@ -35,16 +35,11 @@ git clone https://github.com/spacebuilder13/vibe-coding-stack.git
 # Point your editor/agent at this folder or copy AGENTS.md + .cursor into a product repo
 ```
 
-## Publishing
+## Remote
 
-After review, create the GitHub repo and push (example):
+Live repo: [github.com/spacebuilder13/vibe-coding-stack](https://github.com/spacebuilder13/vibe-coding-stack).
 
-```bash
-cd /Users/jarvis/projects/vibe-coding-stack
-gh repo create spacebuilder13/vibe-coding-stack --public --source=. --remote=origin --push --description "Personal vibe coding stack: agents, hubs, prompts, tools"
-```
-
-(Adjust visibility and description to taste.)
+To add `origin` on another clone: `gh repo clone spacebuilder13/vibe-coding-stack`.
 
 ## License
 
