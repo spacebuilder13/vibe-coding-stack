@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "description": "Optional registry of MCP servers and CLI tools the agent may use. Extend as you wire more.",
+  "mcps": [
+    {
+      "id": "cursor-ide-browser",
+      "purpose": "Headless/IDE browser: navigate, snapshot, QA flows",
+      "notes": "Always read server INSTRUCTIONS; snapshot after navigation."
+    },
+    {
+      "id": "cursor-app-control",
+      "purpose": "Create project dirs + git init; move agent workspace root"
+    }
+  ],
+  "cli": [
+    {
+      "id": "gh",
+      "purpose": "GitHub: repos, issues, PRs, API"
+    }
+  ]
+}

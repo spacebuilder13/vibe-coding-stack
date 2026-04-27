@@ -1,0 +1,3 @@
+# Human-readable hub manifest; keep registry/hubs.json in sync (see hubs/README.md)
+version: 1
+hubs: []

@@ -1,0 +1,4 @@
+.DS_Store
+hubs/exports/**/*.pdf
+# Keep small markdown exports; ignore large binaries if needed:
+# hubs/exports/**/*.mp4

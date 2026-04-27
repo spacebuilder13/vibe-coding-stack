@@ -1,0 +1,15 @@
+---
+description: Personal vibe coding stack defaults for spacebuilder13
+globs: "**/*"
+alwaysApply: false
+---
+
+# Vibe stack
+
+When working on repos that adopt this stack:
+
+1. Read project `README` / `CLAUDE.md` first; then check `vibe-coding-stack` or copied `AGENTS.md` if present.
+2. Use **knowledge hubs** (manifests, Notebook LM, Magic Patterns links, architecture boards) as ground truth for product and design history.
+3. For ambiguous work: **short plan + one shippable artifact** in the same session.
+4. Invoke **skills / subagents** (QA, design review, security, ship) only when requested or when risk is high.
+5. After MCP tool use, follow each server's instructions (e.g. fresh browser snapshot after navigation).
