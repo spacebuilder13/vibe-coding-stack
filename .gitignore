@@ -1,4 +1,25 @@
 .DS_Store
+
+# Vendored tools: generated / local Python
+tools/**/.venv/
+tools/**/out/
+tools/**/__pycache__/
+
+# Secrets and local env (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+
+# Hub exports: allow small text; block common binary / dump patterns by default
 hubs/exports/**/*.pdf
-# Keep small markdown exports; ignore large binaries if needed:
-# hubs/exports/**/*.mp4
+hubs/exports/**/*.mp4
+hubs/exports/**/*.zip
+hubs/exports/**/*.sqlite

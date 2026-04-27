@@ -19,6 +19,7 @@ A **personal, versioned control plane** for how you build with agents: skills, p
 | `prompts/` | Reusable prompt shells (handoff, plan-first, ship loop) |
 | `workflows/` | Human + agent procedures (e.g. conversation → plan → artifact) |
 | `registry/` | Machine-readable indexes (`tools.json`, `hubs.json`) for agents or scripts |
+| `tools/` | Vendored one-off CLIs (e.g. YouTube comment export); each tool has its own `AGENTS.md` |
 
 ## Principles (v1)
 
@@ -41,6 +42,8 @@ Live repo: [github.com/spacebuilder13/vibe-coding-stack](https://github.com/spac
 
 To add `origin` on another clone: `gh repo clone spacebuilder13/vibe-coding-stack`.
 
-## License
+## Visibility and license
 
-Private by default—set license when you publish.
+This repo is **public** on GitHub (clone-friendly stack defaults). It must not contain private credentials or raw client transcripts—use private repos or encrypted storage for those.
+
+Add a `LICENSE` file when you pick a license; until then, all rights reserved unless you state otherwise in `LICENSE`.
