@@ -13,3 +13,4 @@ When working on repos that adopt this stack:
 3. For ambiguous work: **short plan + one shippable artifact** in the same session.
 4. Invoke **skills / subagents** (QA, design review, security, ship) only when requested or when risk is high.
 5. After MCP tool use, follow each server's instructions (e.g. fresh browser snapshot after navigation).
+6. For **competitive or reference-site research** into an Obsidian-style vault + UX audit pack, follow `.cursor/skills/competitive-site-research/SKILL.md` and `tools/competitive-site-research/AGENTS.md`.

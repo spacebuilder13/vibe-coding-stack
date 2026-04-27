@@ -21,6 +21,11 @@
       "id": "youtube-top-comments",
       "path": "tools/youtube-top-comments",
       "purpose": "Export YouTube top comments (yt-dlp) to JSON/CSV/MD; agent entry `tools/youtube-top-comments/AGENTS.md`"
+    },
+    {
+      "id": "competitive-site-research",
+      "path": "tools/competitive-site-research",
+      "purpose": "Sitemap crawl → Obsidian vault (meta/hubs/pages/articles) + UX audit doc pattern; skill `.cursor/skills/competitive-site-research/`; persona `prompts/competitive-research-agent.md`"
     }
   ]
 }

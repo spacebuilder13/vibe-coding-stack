@@ -33,6 +33,12 @@ for 1-shot HQ app builds, applying OpenClaw tiered context + Anthropic agent pri
 - Registry JSONs fetched JIT when executing, not upfront
 - Model routing (Haiku/Sonnet/Opus) → ~51% cost reduction vs uniform Sonnet
 
+## 0.1.5 — 2026-04-28
+
+- **competitive-site-research**: vendored `tools/competitive-site-research/` (sitemap crawl → Obsidian markdown vault; robots `Disallow`; optional posts sitemap); `scripts/generate_hubs.py` for MOC + IA outline.
+- Cursor skill **`.cursor/skills/competitive-site-research/SKILL.md`** and persona **`prompts/competitive-research-agent.md`** (competitive research agent framing + UX audit pack contract).
+- `registry/tools.json`, `tools/README.md`, root `AGENTS.md` + `README.md`.
+
 ## 0.1.4 — 2026-04-28
 
 - Ingest board cleanup: full blueprint synced into `boards/ingest-architecture-board/data/`; shorter `boards/README.md` + board README with `rsync` deploy note; `docs/github-landscape.md` + `AGENTS.md` clarify SSOT vs Pages repo.
