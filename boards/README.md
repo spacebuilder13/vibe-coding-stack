@@ -1,11 +1,9 @@
 # Boards
 
-Static review surfaces (Mermaid + markdown + optional Giscus) that ship with the vibe coding stack so architecture and iteration notes live next to prompts and workflows.
+| Board | Path |
+|-------|------|
+| Ingest v3 | [`ingest-architecture-board/`](./ingest-architecture-board/) |
 
-| Board | Purpose |
-|-------|---------|
-| [`ingest-architecture-board/`](./ingest-architecture-board/) | `/ingest` v3 flow: diagram, blueprint, comments |
+**Edit** diagram and blueprint under `ingest-architecture-board/data/`.
 
-**Canonical public deploy** (standalone repo + Pages): [ingest-architecture-board on GitHub Pages](https://spacebuilder13.github.io/ingest-architecture-board/).
-
-The copy in this repo is the **versioned mirror**—edit `data/*.md` / `data/*.mmd` here, then push the same changes to [spacebuilder13/ingest-architecture-board](https://github.com/spacebuilder13/ingest-architecture-board) if you want the hosted site to stay in sync. Alternatively, enable GitHub Pages on **vibe-coding-stack** with site root `boards/ingest-architecture-board`.
+**Live site** (deploy + Giscus): [Pages](https://spacebuilder13.github.io/ingest-architecture-board/) · [Repo](https://github.com/spacebuilder13/ingest-architecture-board). After changing files here, sync that repo (see board README) so the hosted board matches.

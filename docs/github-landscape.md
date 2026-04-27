@@ -15,7 +15,7 @@ Snapshot date: **2026-04-28**. Source: `gh repo list spacebuilder13` (push dates
 | 2026-04-27 | HTML | project-sandy | Desc: Sandy Menon / Fat Monk Productions — VEM engagement workspace |
 | 2026-04-26 | — | Zen-Design-System | Desc: Personal design system — humane, principle-first, built for vibe coders |
 | 2026-04-26 | TypeScript | Zen-Money-v1 | **Magic Patterns** — README cites generated Vite template + source design URL |
-| 2026-04-26 | JavaScript | ingest-architecture-board | Mermaid board + Giscus on Discussions; static hosting |
+| 2026-04-26 | JavaScript | ingest-architecture-board | Pages + Giscus; **content SSOT**: `vibe-coding-stack/boards/ingest-architecture-board/` |
 | 2026-04-26 | HTML | project-ob | Workspace site |
 | 2026-04-18 | TypeScript | Kansou-Library | App/library shape |
 | 2026-04-15 | TypeScript | bps-compass, bps-ffplan | Paired TS projects (naming suggests planning/compass metaphors) |

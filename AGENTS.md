@@ -7,7 +7,7 @@ You are helping **spacebuilder13** build products in a **vibe coding** style: fa
 1. **This repo** (`vibe-coding-stack`): defaults, prompts, hub manifests, workflows. Read `docs/github-landscape.md` for recent product context.
 2. **Project repo**: product-specific `CLAUDE.md`, `README`, env, and code. Never contradict pinned facts in the project without calling it out.
 3. **Knowledge hubs** (`hubs/`): Notebook LM exports, Magic Patterns design links, Notion/Google Doc pointers. Prefer hub content over memory.
-4. **Architecture boards** (`boards/`): e.g. `boards/ingest-architecture-board/` — Mermaid + blueprint + Giscus; canonical deploy also at [ingest-architecture-board Pages](https://spacebuilder13.github.io/ingest-architecture-board/).
+4. **Architecture boards** (`boards/`): ingest v3 lives in `boards/ingest-architecture-board/`; [live board](https://spacebuilder13.github.io/ingest-architecture-board/).
 5. **Skills / subagent flows** (often installed globally, e.g. gstack under `~/.claude/skills`): use for **QA**, **design review**, **security**, **ship**, **benchmark**, **investigate** when the user asks or risk warrants it—not on every trivial edit.
 6. **MCP tools**: browser control, app control, issue trackers, etc. Check tool schemas before calling; prefer evidence (snapshots, API results) over guessing.
 

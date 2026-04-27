@@ -1,40 +1,34 @@
-# Ingest v3 Architecture Board
+# Ingest v3 architecture board
 
-A lightweight review board for:
+**Source of truth** for diagram + blueprint: this folder (`data/`).
 
-- Mermaid architecture visualization
-- Blueprint markdown side panel
-- Persistent comments and Q&A via GitHub Discussions (Giscus)
-
-## Local preview
-
-From this folder, run:
+## Preview locally
 
 ```bash
-python3 -m http.server 4173
+cd boards/ingest-architecture-board && python3 -m http.server 4173
 ```
 
 Open `http://localhost:4173`.
 
-## GitHub hosting
+## Hosted + comments
 
-1. Push this folder to a GitHub repo.
-2. Enable GitHub Discussions in repo settings.
-3. Install [Giscus app](https://github.com/apps/giscus) on the repo.
-4. Create a Discussions category named `Architecture Feedback`.
-5. Go to [giscus.app](https://giscus.app) to generate:
-   - `data-repo-id`
-   - `data-category-id`
-6. Update those IDs in `app.js`.
+- **Pages**: https://spacebuilder13.github.io/ingest-architecture-board/
+- **Giscus** in `app.js` targets repo `spacebuilder13/ingest-architecture-board` (install [giscus app](https://github.com/apps/giscus) if comments are blank).
 
-## Vercel hosting
+## Keep deploy repo in sync
 
-After the repo is on GitHub:
+From the **vibe-coding-stack** repo root (adjust path if your clone differs):
 
-1. Open [Vercel New Project](https://vercel.com/new)
-2. Import this repo
-3. Deploy with default static settings (no build command required)
+```bash
+rsync -av --delete --exclude README.md \
+  boards/ingest-architecture-board/ \
+  ../ingest-architecture-board/
+```
 
-Or one-click (replace with your final repo URL):
+Use `--exclude README.md` so the deploy mirror can keep its own top-level README (Pages + Giscus notes).
 
-`https://vercel.com/new/clone?repository-url=https://github.com/<you>/<repo>`
+Then commit and push `ingest-architecture-board` so GitHub Pages updates.
+
+## Vercel
+
+Import [vibe-coding-stack](https://github.com/spacebuilder13/vibe-coding-stack) and set **Root Directory** to `boards/ingest-architecture-board`, or deploy the standalone repo above.
