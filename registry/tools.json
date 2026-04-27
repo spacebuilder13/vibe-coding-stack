@@ -16,6 +16,11 @@
     {
       "id": "gh",
       "purpose": "GitHub: repos, issues, PRs, API"
+    },
+    {
+      "id": "youtube-top-comments",
+      "path": "tools/youtube-top-comments",
+      "purpose": "Export YouTube top comments (yt-dlp) to JSON/CSV/MD; agent entry `tools/youtube-top-comments/AGENTS.md`"
     }
   ]
 }
