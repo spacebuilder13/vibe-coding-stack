@@ -14,6 +14,7 @@ A **personal, versioned control plane** for how you build with agents: skills, p
 |------|------|
 | `AGENTS.md` | Agent entry: priorities, stack layers, when to use what |
 | `.cursor/rules/vibe-stack.mdc` | Cursor-native reinforcement of the same |
+| `boards/` | **Architecture boards**: static Mermaid + markdown review surfaces (e.g. ingest v3) |
 | `docs/github-landscape.md` | Dated snapshot of how your public GitHub work evolved (context, not prescription) |
 | `hubs/` | **Knowledge hubs**: manifests + conventions for Notebook LM, docs, design sources, Magic Patterns links, etc. |
 | `prompts/` | Reusable prompt shells (handoff, plan-first, ship loop) |
