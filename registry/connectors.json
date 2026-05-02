@@ -1,0 +1,166 @@
+{
+  "version": "0.2.0",
+  "cost_tiers": {
+    "low": "stateless read or CLI (GitHub, Vercel CLI)",
+    "medium": "API call with response (Claude, Resend, PostHog)",
+    "high": "streaming / real-time / expensive (ElevenLabs TTS, Opus model)"
+  },
+  "connectors": [
+    {
+      "id": "anthropic",
+      "name": "Anthropic Claude API",
+      "purpose": "Chat, code gen, analysis, doc parsing, quiz generation",
+      "env_vars": ["ANTHROPIC_API_KEY"],
+      "models": {
+        "routing": "claude-haiku-4-5-20251001",
+        "default": "claude-sonnet-4-6",
+        "reasoning": "claude-opus-4-6"
+      },
+      "domain": "llm",
+      "docs": "domains/llm.md",
+      "cost_tier": "medium",
+      "used_in": ["project-sandy", "project-insurance", "project-ob"]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "purpose": "TTS (agent speaks) + STT (user voice input) + post-call webhooks",
+      "env_vars": ["ELEVENLABS_API_KEY", "ELEVENLABS_VOICE_ID"],
+      "known_voice_ids": {
+        "sandy": "EXAVITQu4vr4xnSDxMaL"
+      },
+      "domain": "voice",
+      "docs": "domains/voice.md",
+      "cost_tier": "high",
+      "used_in": ["project-insurance"]
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "purpose": "Default deployment — serverless functions + static hosting",
+      "env_vars": [],
+      "cli": "vercel",
+      "domain": "deployment",
+      "docs": "domains/deployment.md",
+      "cost_tier": "low",
+      "used_in": ["project-sandy", "project-insurance", "project-ob"]
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare Workers",
+      "purpose": "Edge SSR — TanStack Start apps, global low-latency",
+      "env_vars": [],
+      "cli": "wrangler",
+      "domain": "deployment",
+      "docs": "domains/deployment.md",
+      "cost_tier": "low",
+      "used_in": ["zen-money-manager-d8a17b9e"]
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "purpose": "PostgreSQL + Google Auth + Edge Functions + Realtime",
+      "env_vars": ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"],
+      "domain": "deployment",
+      "docs": "domains/deployment.md",
+      "cost_tier": "medium",
+      "used_in": ["supperclubbing", "app-store/pwa-shell"]
+    },
+    {
+      "id": "posthog",
+      "name": "PostHog",
+      "purpose": "Product analytics — event tracking, session recording, funnels",
+      "env_vars": ["POSTHOG_API_KEY", "POSTHOG_HOST"],
+      "domain": "analytics",
+      "docs": "domains/analytics.md",
+      "cost_tier": "medium",
+      "used_in": ["supperclubbing", "project-insurance"]
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "purpose": "Transactional email — post-session summaries, opt-in, notifications",
+      "env_vars": ["RESEND_API_KEY"],
+      "domain": "distribution",
+      "docs": "domains/distribution.md",
+      "cost_tier": "medium",
+      "used_in": ["supperclubbing", "project-insurance"]
+    },
+    {
+      "id": "magic-patterns",
+      "name": "Magic Patterns",
+      "purpose": "Design prototyping + code sync via MCP server",
+      "env_vars": [],
+      "mcp_server": "magic-patterns",
+      "domain": "design",
+      "docs": "domains/design.md",
+      "cost_tier": "low",
+      "known_boards": {
+        "sandy": "3vmbjt4y79itxnlfhkqkt5"
+      },
+      "used_in": ["project-sandy", "project-insurance"]
+    },
+    {
+      "id": "notebooklm",
+      "name": "Google NotebookLM",
+      "purpose": "360-degree multi-advisor knowledge synthesis from sources",
+      "env_vars": [],
+      "domain": "knowledge",
+      "docs": "domains/knowledge.md",
+      "cost_tier": "low",
+      "used_in": ["project-sandy", "project-insurance", "project-ob"]
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "purpose": "Payments, subscriptions, invoicing (international)",
+      "env_vars": ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET", "STRIPE_PUBLISHABLE_KEY"],
+      "domain": "payments",
+      "docs": "domains/payments.md",
+      "cost_tier": "medium",
+      "used_in": []
+    },
+    {
+      "id": "razorpay",
+      "name": "Razorpay",
+      "purpose": "Payments for India — UPI, cards, netbanking, subscriptions",
+      "env_vars": ["RAZORPAY_KEY_ID", "RAZORPAY_KEY_SECRET", "RAZORPAY_WEBHOOK_SECRET"],
+      "domain": "payments",
+      "docs": "domains/payments.md",
+      "cost_tier": "medium",
+      "used_in": []
+    },
+    {
+      "id": "github",
+      "name": "GitHub + gh CLI",
+      "purpose": "Source control, PRs, issues, GitHub Pages",
+      "env_vars": [],
+      "cli": "gh",
+      "domain": "deployment",
+      "docs": "domains/deployment.md",
+      "cost_tier": "low",
+      "used_in": ["all projects"]
+    },
+    {
+      "id": "linear",
+      "name": "Linear MCP",
+      "purpose": "Task creation and project tracking via MCP server",
+      "env_vars": ["LINEAR_API_KEY"],
+      "mcp_server": "linear",
+      "domain": "planning",
+      "docs": "domains/planning.md",
+      "cost_tier": "low",
+      "used_in": ["vibe-coding-stack"]
+    },
+    {
+      "id": "vercel-kv",
+      "name": "Vercel KV",
+      "purpose": "Session persistence — lightweight Redis-compatible KV store",
+      "env_vars": ["KV_REST_API_URL", "KV_REST_API_TOKEN"],
+      "domain": "deployment",
+      "docs": "domains/deployment.md",
+      "cost_tier": "low",
+      "used_in": ["project-insurance", "project-sandy"]
+    }
+  ]
+}

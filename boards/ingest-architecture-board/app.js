@@ -55,8 +55,8 @@ async function boot() {
   try {
     const { diagramText, blueprintText } = await loadFiles();
     mermaid.initialize({ startOnLoad: false, theme: "dark" });
-    mermaidEl.textContent = diagramText;
-    await mermaid.run({ querySelector: ".mermaid" });
+    const { svg } = await mermaid.render("ingest-v3-diagram", diagramText);
+    mermaidEl.innerHTML = svg;
     blueprintEl.innerHTML = marked.parse(blueprintText);
     mountGiscus();
   } catch (err) {

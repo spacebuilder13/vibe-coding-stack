@@ -1,0 +1,213 @@
+{
+  "version": "0.2.0",
+  "note": "Skills live in ~/.claude/skills/. This registry is for routing only — do not load full skill bodies into context.",
+  "skills": [
+    {
+      "id": "plan-eng-review",
+      "trigger": "/plan-eng-review",
+      "domain": "planning",
+      "when": "Goal is ambiguous, need to lock architecture and execution plan",
+      "avoid_when": "Goal is clear and BUILD.md is already written",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "plan-ceo-review",
+      "trigger": "/plan-ceo-review",
+      "domain": "planning",
+      "when": "Need to challenge the problem framing, expand scope, find 10-star product",
+      "avoid_when": "Execution plan already locked",
+      "cost": "medium",
+      "chains_to": ["/plan-eng-review"]
+    },
+    {
+      "id": "autoplan",
+      "trigger": "/autoplan",
+      "domain": "planning",
+      "when": "Need a full CEO + design + eng + DX review in sequence automatically",
+      "avoid_when": "Simple, well-defined build",
+      "cost": "high",
+      "chains_to": []
+    },
+    {
+      "id": "design-shotgun",
+      "trigger": "/design-shotgun",
+      "domain": "design",
+      "when": "Need multiple design variants to compare before committing to a direction",
+      "avoid_when": "Design direction already confirmed",
+      "cost": "high",
+      "chains_to": ["/design-html", "/design-review"]
+    },
+    {
+      "id": "design-html",
+      "trigger": "/design-html",
+      "domain": "design",
+      "when": "Design direction locked, need production-quality HTML/CSS",
+      "avoid_when": "Design not yet approved",
+      "cost": "medium",
+      "chains_to": ["/design-review"]
+    },
+    {
+      "id": "design-review",
+      "trigger": "/design-review",
+      "domain": "design",
+      "when": "Need a designer's-eye QA pass on visual consistency, spacing, hierarchy",
+      "avoid_when": "Pre-design phase",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "design-consultation",
+      "trigger": "/design-consultation",
+      "domain": "design",
+      "when": "Need a complete design system proposal before building",
+      "avoid_when": "Already using Zen DS or Sandy tokens",
+      "cost": "high",
+      "chains_to": ["/design-shotgun"]
+    },
+    {
+      "id": "qa",
+      "trigger": "/qa",
+      "domain": "testing",
+      "when": "Ready for QA pass — fix bugs found, iterate until pass",
+      "avoid_when": "Code not yet written",
+      "cost": "medium",
+      "chains_to": ["/canary"]
+    },
+    {
+      "id": "qa-only",
+      "trigger": "/qa-only",
+      "domain": "testing",
+      "when": "Need a report of issues without auto-fixing",
+      "avoid_when": "Want fixes applied automatically",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "health",
+      "trigger": "/health",
+      "domain": "testing",
+      "when": "Need a code quality dashboard — types, lint, tests, dead code",
+      "avoid_when": "Pre-build phase",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "benchmark",
+      "trigger": "/benchmark",
+      "domain": "testing",
+      "when": "Performance regression suspected — page load, Core Web Vitals",
+      "avoid_when": "Not a performance-critical app",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "ship",
+      "trigger": "/ship",
+      "domain": "deployment",
+      "when": "Ready to deploy — merges, bumps version, updates changelog, creates PR",
+      "avoid_when": "/qa has not passed",
+      "cost": "low",
+      "chains_to": ["/land-and-deploy"]
+    },
+    {
+      "id": "land-and-deploy",
+      "trigger": "/land-and-deploy",
+      "domain": "deployment",
+      "when": "Merge PR, wait for CI, verify production health",
+      "avoid_when": "PR not yet created",
+      "cost": "low",
+      "chains_to": ["/canary"]
+    },
+    {
+      "id": "canary",
+      "trigger": "/canary",
+      "domain": "testing",
+      "when": "Post-deploy monitoring — watch for errors, regressions, failures",
+      "avoid_when": "Not yet deployed",
+      "cost": "low",
+      "chains_to": []
+    },
+    {
+      "id": "review",
+      "trigger": "/review",
+      "domain": "deployment",
+      "when": "Pre-landing PR review — SQL safety, LLM trust boundaries, structural issues",
+      "avoid_when": "No PR to review",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "investigate",
+      "trigger": "/investigate",
+      "domain": "testing",
+      "when": "Bug with unknown root cause — systematic 4-phase: investigate, analyze, hypothesize, implement",
+      "avoid_when": "Root cause already known",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "cso",
+      "trigger": "/cso",
+      "domain": "security",
+      "when": "Security audit needed — secrets, dependencies, CI/CD pipeline, LLM trust boundaries",
+      "avoid_when": "Routine build with no security surface changes",
+      "cost": "high",
+      "chains_to": []
+    },
+    {
+      "id": "browse",
+      "trigger": "/browse",
+      "domain": "testing",
+      "when": "Need to navigate a URL, interact with elements, verify page state",
+      "avoid_when": "No live URL to test",
+      "cost": "low",
+      "chains_to": []
+    },
+    {
+      "id": "ingest",
+      "trigger": "/ingest",
+      "domain": "knowledge",
+      "when": "Audio/video/conversation to process into structured knowledge",
+      "avoid_when": "No media to ingest",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "retro",
+      "trigger": "/retro",
+      "domain": "planning",
+      "when": "Weekly engineering retrospective — commit history, work patterns, quality metrics",
+      "avoid_when": "Mid-sprint",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
+      "id": "document-release",
+      "trigger": "/document-release",
+      "domain": "planning",
+      "when": "Post-ship docs update — README, ARCHITECTURE, CONTRIBUTING, CLAUDE.md",
+      "avoid_when": "Pre-ship",
+      "cost": "low",
+      "chains_to": []
+    },
+    {
+      "id": "simplify",
+      "trigger": "/simplify",
+      "domain": "coding",
+      "when": "Review changed code for reuse, quality, efficiency",
+      "avoid_when": "Code not yet written",
+      "cost": "low",
+      "chains_to": []
+    },
+    {
+      "id": "office-hours",
+      "trigger": "/office-hours",
+      "domain": "planning",
+      "when": "YC-style forcing questions on demand reality, wedge, desperation",
+      "avoid_when": "Build already scoped and approved",
+      "cost": "medium",
+      "chains_to": []
+    }
+  ]
+}

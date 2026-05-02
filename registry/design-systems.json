@@ -1,0 +1,81 @@
+{
+  "version": "0.2.0",
+  "design_systems": [
+    {
+      "id": "zen-ds",
+      "name": "Zen Design System",
+      "location": "/Users/jarvis/Documents/Builder/Zen-Design-System",
+      "status": "vision-to-partial",
+      "layers": {
+        "philosophy": "done — 8 emotional states, 7 tests",
+        "principles": "done — one-red rule, epistemic hygiene, motion as rhetoric",
+        "foundations": "done — full token set, 5-font stack, Breath System",
+        "components": "partial — Path Card, Metric Row, Step Card, Tab Bar",
+        "patterns": "partial — insurance narrative lane, HumComm strip",
+        "guidelines": "missing — no anti-pattern library"
+      },
+      "key_rules": [
+        "Earn your colour — default greyscale, colour must mean something",
+        "One red rule — one accent only, used sparingly",
+        "7 tests — every component must pass before shipping",
+        "Motion as rhetoric — animation must communicate, not decorate"
+      ],
+      "domain": "design",
+      "docs": "domains/design.md"
+    },
+    {
+      "id": "sandy-tokens",
+      "name": "Sandy Design Tokens",
+      "location": "/Users/jarvis/Documents/Builder/zen-money-manager-d8a17b9e/src/styles.css",
+      "status": "production",
+      "directions": {
+        "A": "Quiet Mandala — warm, circular, calm",
+        "B": "Editorial Clarity — structured, typographic",
+        "C": "Spatial Conversation — depth, layered panels",
+        "D": "Living Document — animated, breathing"
+      },
+      "tokens": {
+        "colors": {
+          "bg": "#FBFAF6",
+          "surface": "#FFFFFF",
+          "ink": "#1B1A17",
+          "gold": "#C4983A",
+          "tea": "#5C7C6E"
+        },
+        "fonts": {
+          "display": "DM Serif Display",
+          "sans": "Inter",
+          "mono": "IBM Plex Mono"
+        },
+        "easing": {
+          "calm": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+          "arrive": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "breath": "0.9s"
+        }
+      },
+      "domain": "design",
+      "docs": "domains/design.md"
+    },
+    {
+      "id": "shadcn",
+      "name": "shadcn/ui + Radix UI",
+      "status": "production",
+      "components": "25+ primitives — accordion, dialog, dropdown, select, tabs, tooltip, etc.",
+      "install": "npx shadcn@latest add <component>",
+      "domain": "design",
+      "docs": "domains/design.md"
+    },
+    {
+      "id": "magic-patterns",
+      "name": "Magic Patterns",
+      "purpose": "Design prototyping to code — use as SSOT for visual direction",
+      "workflow": "Create board → store URL in registry → generate code → track drift",
+      "mcp_server": "magic-patterns",
+      "known_boards": {
+        "sandy-insurance": "3vmbjt4y79itxnlfhkqkt5"
+      },
+      "domain": "design",
+      "docs": "domains/design.md"
+    }
+  ]
+}
