@@ -1,0 +1,39 @@
+sequenceDiagram
+    actor User
+    participant App as Jain Menu App<br/>(PWA)
+    participant Weather as Weather API<br/>(OpenWeatherMap)
+    participant Claude as Claude API<br/>(Haiku — scoring)
+    participant YT as YouTube Data API<br/>(v3)
+    participant Cook as Cook<br/>(WhatsApp share)
+
+    User->>App: opens app (home page)
+
+    par Fetch context in parallel
+        App->>Weather: GET /weather?city=Mumbai
+        Weather-->>App: 38°C, humid, sunny
+    and
+        App->>App: read user history<br/>(localStorage — last 30 days)
+        Note over App: novelty: what hasn't been made recently<br/>recency: last time this appeared
+    end
+
+    App->>Claude: score all Jain recipes
+    Note over Claude: Input: recipe list + weather + history<br/>Score each on:<br/>• weather fit (hot/cold/seasonal)<br/>• novelty (days since last made)<br/>• ingredient price (seasonal index)
+    Claude-->>App: ranked recipes with scores
+
+    App->>YT: search Jain cooking videos<br/>(top recipe titles, filter: shorts + recent)
+    YT-->>App: candidate videos
+
+    App->>Claude: score videos
+    Note over Claude: Score each on:<br/>• novelty (not shown in last 14 days)<br/>• recency (upload date)<br/>• weather match (title/desc relevance)
+    Claude-->>App: top 3 videos ranked
+
+    App->>User: home page renders
+    Note over User,App: Card 1: Recipe A<br/>☀️ Weather fit: 9/10 🌟 Novelty: 8/10 💰 Price: 7/10<br/>+ YT short thumbnail<br/><br/>Card 2: Recipe B (scores shown)<br/>Card 3: Recipe C (scores shown)
+
+    User->>App: selects a card (recipe + video)
+    App->>User: full recipe detail<br/>ingredients + method + YT embed
+
+    User->>App: taps "Share with Cook"
+    App->>App: compile cook note<br/>(recipe name + ingredient list + portions)
+    App->>Cook: WhatsApp share<br/>"Today: Stuffed Capsicum (Jain). Ingredients: ..."
+    Cook-->>User: 👍

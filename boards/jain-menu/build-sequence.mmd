@@ -1,0 +1,49 @@
+sequenceDiagram
+    actor Human
+    participant CC as Claude Code
+    participant T0 as Tier 0 Cache<br/>(SOUL + STACK + HEARTBEAT)
+    participant Haiku as Haiku Router
+    participant Domains as Domain Docs
+    participant Sonnet as Sonnet Builder
+    participant QA as /qa + /browse
+    participant Vercel
+    participant Store as app-store/STORE.md
+
+    Human->>CC: "Jain menu app — weather, novelty, pricing,<br/>YT videos, share with cook"
+
+    CC->>T0: read (cached ~70 effective tokens)
+    T0-->>CC: identity + environment index loaded
+
+    CC->>Haiku: classify domains from brief
+    Note over Haiku: Brief has: UI, scoring logic,<br/>external APIs, LLM calls, deploy
+    Haiku-->>CC: load → design, coding, llm,<br/>knowledge, deployment, analytics
+
+    CC->>Domains: load 6 domain docs (on-demand)
+    Domains-->>CC: patterns, connectors, stack choices
+
+    CC->>CC: fill PROGRAM.md<br/>(brief, persona, constraints, success criteria)
+    CC->>Human: PROGRAM.md ready — confirm?
+    Human-->>CC: confirmed
+
+    CC->>Sonnet: write BUILD.md spec
+    Note over Sonnet: App name, routes, components,<br/>API routes, connectors, env vars
+    Sonnet-->>CC: BUILD.md written
+
+    CC->>Human: BUILD.md ready — review spec
+    Human-->>CC: approved
+
+    CC->>Human: visual approval gate<br/>(design direction: A/B/C/D?)
+    Human-->>CC: Direction A — Quiet Mandala, warm tones
+
+    CC->>Sonnet: build code per BUILD.md
+    Note over Sonnet: React + Vite + Sandy tokens<br/>Vercel Functions for scoring API
+
+    CC->>QA: /qa — navigate, interact, verify
+    QA-->>CC: issues found (if any) → fix loop
+    CC->>QA: rerun until pass
+
+    CC->>Vercel: /ship → deploy
+    Vercel-->>CC: live URL
+
+    CC->>Store: append row to STORE.md
+    CC->>Human: done ✓<br/>URL + store entry

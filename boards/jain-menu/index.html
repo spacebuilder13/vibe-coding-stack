@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jain Menu App — Sequence Diagrams</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: #0f0f0f;
+        color: #e8e4db;
+        font-family: 'Inter', system-ui, sans-serif;
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #C4983A;
+        margin-bottom: 0.25rem;
+      }
+      .subtitle {
+        font-size: 0.875rem;
+        color: #6b6660;
+        margin-bottom: 2.5rem;
+      }
+      .diagram-section {
+        margin-bottom: 3rem;
+      }
+      h2 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #a09890;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.75rem;
+      }
+      .diagram-wrap {
+        background: #161616;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        padding: 2rem;
+        overflow-x: auto;
+      }
+      .diagram-wrap svg {
+        max-width: 100%;
+        height: auto;
+      }
+      .toolbar {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+      button {
+        background: #222;
+        color: #a09890;
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+      button:hover { background: #2a2a2a; color: #e8e4db; }
+    </style>
+  </head>
+  <body>
+    <h1>Jain Menu App</h1>
+    <p class="subtitle">Sequence diagrams — build pipeline + app runtime</p>
+
+    <div class="diagram-section">
+      <h2>1 — How the stack builds the app (brief → deployed)</h2>
+      <div class="toolbar">
+        <button onclick="zoom('build', 0.1)">Zoom +</button>
+        <button onclick="zoom('build', -0.1)">Zoom −</button>
+        <button onclick="reset('build')">Reset</button>
+      </div>
+      <div class="diagram-wrap">
+        <div id="build" style="transform-origin: top left;"></div>
+      </div>
+    </div>
+
+    <div class="diagram-section">
+      <h2>2 — How the app works at runtime (user → cook)</h2>
+      <div class="toolbar">
+        <button onclick="zoom('app', 0.1)">Zoom +</button>
+        <button onclick="zoom('app', -0.1)">Zoom −</button>
+        <button onclick="reset('app')">Reset</button>
+      </div>
+      <div class="diagram-wrap">
+        <div id="app" style="transform-origin: top left;"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "dark",
+        sequence: {
+          actorMargin: 60,
+          messageMargin: 40,
+          boxTextMargin: 10,
+          noteMargin: 12,
+          mirrorActors: false,
+          useMaxWidth: true,
+        }
+      });
+
+      const scales = { build: 1, app: 1 };
+
+      window.zoom = (id, delta) => {
+        scales[id] = Math.max(0.4, Math.min(2, scales[id] + delta));
+        document.getElementById(id).style.transform = `scale(${scales[id]})`;
+      };
+      window.reset = (id) => {
+        scales[id] = 1;
+        document.getElementById(id).style.transform = `scale(1)`;
+      };
+
+      async function load(id, path) {
+        const res = await fetch(path);
+        const text = await res.text();
+        const { svg } = await mermaid.render(id + "-svg", text);
+        document.getElementById(id).innerHTML = svg;
+      }
+
+      try {
+        await Promise.all([
+          load("build", "./build-sequence.mmd"),
+          load("app", "./app-sequence.mmd"),
+        ]);
+      } catch (err) {
+        document.body.innerHTML += `<pre style="color:red;padding:1rem">${err.message}</pre>`;
+      }
+    </script>
+  </body>
+</html>
