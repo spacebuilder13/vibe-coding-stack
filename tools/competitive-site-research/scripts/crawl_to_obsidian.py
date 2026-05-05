@@ -17,6 +17,7 @@ from urllib.parse import urlparse
 
 import requests
 import trafilatura
+from lxml import etree
 
 NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
@@ -83,13 +84,50 @@ def parse_robots_disallows(robots_txt: str) -> list[str]:
 
 
 def parse_sitemap_index(xml_text: str) -> list[str]:
-    root = ET.fromstring(xml_text)
-    return [loc.text for loc in root.findall(".//sm:loc", NS) if loc.text]
+    return _parse_loc_values(xml_text)
 
 
 def parse_urlset(xml_text: str) -> list[str]:
-    root = ET.fromstring(xml_text)
-    return [loc.text for loc in root.findall(".//sm:loc", NS) if loc.text]
+    return _parse_loc_values(xml_text)
+
+
+def _parse_loc_values(xml_text: str) -> list[str]:
+    """
+    Parse <loc> values from sitemap XML defensively.
+
+    Some real-world sitemap files are malformed (bad entities, truncated bytes).
+    We try strict parsing first, then lxml recovery, then regex fallback.
+    """
+    def _dedupe(items: list[str]) -> list[str]:
+        seen: set[str] = set()
+        out: list[str] = []
+        for raw in items:
+            u = (raw or "").strip()
+            if not u or u in seen:
+                continue
+            seen.add(u)
+            out.append(u)
+        return out
+
+    try:
+        root = ET.fromstring(xml_text)
+        vals = [loc.text for loc in root.findall(".//sm:loc", NS) if loc.text]
+        if vals:
+            return _dedupe(vals)
+    except Exception:
+        pass
+
+    try:
+        root = etree.fromstring(xml_text.encode("utf-8", "ignore"), parser=etree.XMLParser(recover=True))
+        vals = [v.strip() for v in root.xpath("//*[local-name()='loc']/text()") if isinstance(v, str) and v.strip()]
+        if vals:
+            return _dedupe(vals)
+    except Exception:
+        pass
+
+    # Last resort: pattern scan for <loc>...</loc> snippets.
+    vals = re.findall(r"<loc>\s*(.*?)\s*</loc>", xml_text, flags=re.IGNORECASE | re.DOTALL)
+    return _dedupe(vals)
 
 
 def collect_all_sitemap_urls(sess: requests.Session, base: str) -> list[str]:
@@ -100,9 +138,15 @@ def collect_all_sitemap_urls(sess: requests.Session, base: str) -> list[str]:
         idx = fetch_text(sess, sm_url)
     except Exception:
         return out
-    for child in parse_sitemap_index(idx):
+
+    # Handle either a sitemap index or direct urlset at /sitemap.xml.
+    children = [u for u in parse_sitemap_index(idx) if u.lower().endswith(".xml")]
+    if not children:
+        children = [sm_url]
+
+    for child in children:
         try:
-            body = fetch_text(sess, child)
+            body = idx if child == sm_url else fetch_text(sess, child)
         except Exception:
             continue
         for u in parse_urlset(body):
@@ -140,6 +184,16 @@ def is_disallowed(url: str, prefixes: tuple[str, ...]) -> bool:
 def is_skippable_asset(url: str) -> bool:
     low = url.lower().split("?")[0]
     return any(low.endswith(ext) for ext in SKIP_EXTENSIONS)
+
+
+def same_site(url: str, base: str) -> bool:
+    up = urlparse(url)
+    bp = urlparse(base)
+    if up.scheme not in {"http", "https"}:
+        return False
+    uhost = (up.netloc or "").lower().removeprefix("www.")
+    bhost = (bp.netloc or "").lower().removeprefix("www.")
+    return bool(uhost and bhost and uhost == bhost)
 
 
 def url_to_vault_path(url: str, base: str, vault: Path) -> Path:
@@ -213,6 +267,74 @@ def worker(args: tuple[str, Path, str]) -> tuple[str, bool, str]:
     return url, err is None, err or "ok"
 
 
+def write_zen_audit_docs(vault: Path, base: str, ordered: list[str], ok: int, fail: int, target_url: str | None) -> None:
+    meta = vault / "00-meta"
+    target = (target_url or "").strip() or (ordered[0] if ordered else base)
+
+    rubric = """# ZEN Design Principles Rubric (Competitive Audit)
+
+Use this rubric to evaluate public pages with traceable, evidence-first judgments.
+
+## Principle set
+
+1. **Clarity First** - page intent is obvious quickly.
+2. **Progressive Disclosure** - complexity is chunked into steps/sections.
+3. **Guided Decisions** - inputs are explained and outputs are interpretable.
+4. **Trust by Transparency** - assumptions and calculation logic are visible.
+5. **Low Cognitive Load** - concise labels and minimal duplication.
+6. **Actionable Outcomes** - outputs map to concrete next actions.
+7. **Consistency & System Harmony** - cross-page patterns stay coherent.
+8. **Accessibility & Inclusion (Observed Layer)** - labels, units, and comprehension cues are explicit.
+
+## Scoring logic
+
+- **PASS**: principle clearly satisfied with direct evidence.
+- **PARTIAL**: principle exists but has friction or inconsistency.
+- **FAIL**: principle absent, contradictory, or blocked.
+"""
+    scorecard = f"""# ZEN Audit Scorecard — {urlparse(base).netloc}
+
+Run metadata:
+- base: `{base}`
+- target URL: `{target}`
+- crawl success: `{ok} ok / {fail} fail`
+
+Legend: `P=PASS`, `Pt=PARTIAL`, `F=FAIL`
+
+| URL | Clarity | Disclosure | Guidance | Trust | Cog Load | Actionability | Consistency | Accessibility | Confidence | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `{target}` | Pt | Pt | Pt | Pt | Pt | Pt | Pt | Pt | medium | Replace placeholders using fetched evidence |
+"""
+    findings = f"""# ZEN Audit Findings — {urlparse(base).netloc}
+
+Primary target: `{target}`
+
+## What is working
+
+- Fill with evidence-backed strengths from copy, UX structure, and outputs.
+
+## What is not working
+
+- Fill with evidence-backed frictions and failures against ZEN principles.
+
+## Principle-by-principle logic
+
+For each principle, write:
+1. Pass/Partial/Fail decision
+2. The exact observable evidence
+3. Why that evidence maps to the principle
+4. Suggested remediation if not pass
+
+## Audit reliability
+
+- Crawl status: `{ok} ok / {fail} fail`
+- Note any pages with extraction failures that reduce confidence.
+"""
+    (meta / "ZEN-DESIGN-PRINCIPLES-RUBRIC.md").write_text(rubric + "\n", encoding="utf-8")
+    (meta / "ZEN-AUDIT-SCORECARD.md").write_text(scorecard + "\n", encoding="utf-8")
+    (meta / "ZEN-AUDIT-FINDINGS.md").write_text(findings + "\n", encoding="utf-8")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--base-url", required=True, help="Origin, e.g. https://example.com")
@@ -223,6 +345,8 @@ def main() -> None:
     ap.add_argument("--marketing-limit", type=int, default=400)
     ap.add_argument("--articles-limit", type=int, default=0)
     ap.add_argument("--insecure", action="store_true")
+    ap.add_argument("--zen-audit", action="store_true", help="Initialize ZEN audit docs under 00-meta/")
+    ap.add_argument("--zen-target-url", default=None, help="Specific URL row to seed in ZEN scorecard")
     ap.add_argument(
         "--disallow-prefix",
         action="append",
@@ -256,7 +380,7 @@ def main() -> None:
     article_urls = [
         u
         for u in collect_post_urls(sess, base, args.posts_sitemap)
-        if u.startswith(base) and not is_disallowed(u, disallow_t)
+        if same_site(u, base) and not is_disallowed(u, disallow_t)
     ]
     if args.articles_limit > 0:
         article_urls = article_urls[: args.articles_limit]
@@ -266,7 +390,7 @@ def main() -> None:
         raw = [
             u
             for u in collect_all_sitemap_urls(sess, base)
-            if u.startswith(base)
+            if same_site(u, base)
             and not is_disallowed(u, disallow_t)
             and not is_skippable_asset(u)
             and "/articles/" not in u
@@ -347,6 +471,8 @@ def main() -> None:
         ),
         encoding="utf-8",
     )
+    if args.zen_audit:
+        write_zen_audit_docs(vault, base, ordered, ok, fail, args.zen_target_url)
     print(f"Done. ok={ok} fail={fail} vault={vault}", file=sys.stderr)
 
 

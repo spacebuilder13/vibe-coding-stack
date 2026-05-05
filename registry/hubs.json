@@ -1,4 +1,18 @@
 {
   "version": 1,
-  "hubs": []
+  "description": "Registry of active project hubs. Sync with hubs/manifest.yaml.",
+  "hubs": [
+    {
+      "id": "space-ships-and-atoms",
+      "name": "Space Ships and Atoms (TQI founder dashboard)",
+      "repo": "https://github.com/spacebuilder13/sparkle-space-vault",
+      "local": "/Users/jarvis/Projects/sparkle-space-vault",
+      "design_system": "Sandy — https://zen-design-pal.lovable.app/sandy-lab/",
+      "stack": "react-vite-ts-shadcn-supabase",
+      "deployment": "vercel",
+      "claude_project": "https://claude.ai/project/019aee6f-6c4a-7667-9184-2e5198079bae",
+      "notebooklm": "https://notebooklm.google.com/notebook/44eb2cdb-30a4-4b33-90ca-cf043e527d87",
+      "created": "2026-05-05"
+    }
+  ]
 }

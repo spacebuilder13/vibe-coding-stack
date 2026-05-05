@@ -16,7 +16,9 @@ A **personal, versioned control plane** for how you build with agents: skills, p
 | `.cursor/rules/vibe-stack.mdc` | Cursor-native reinforcement of the same |
 | `boards/` | **Architecture boards** (SSOT for ingest v3 diagram + blueprint + local preview) |
 | `docs/github-landscape.md` | Dated snapshot of how your public GitHub work evolved (context, not prescription) |
+| `docs/mde-agent-flow.md` | Example of consumable architecture writing (Markdown + Mermaid + conventions) |
 | `hubs/` | **Knowledge hubs**: manifests + conventions for Notebook LM, docs, design sources, Magic Patterns links, etc. |
+| `notebooks/` | Runnable narrative demos (`Markdown -> Code -> Visual`) for explainable workflows |
 | `prompts/` | Reusable prompt shells (handoff, plan-first, ship loop) |
 | `workflows/` | Human + agent procedures (e.g. conversation → plan → artifact) |
 | `registry/` | Machine-readable indexes (`tools.json`, `hubs.json`) for agents or scripts |
@@ -38,6 +40,14 @@ A **personal, versioned control plane** for how you build with agents: skills, p
 git clone https://github.com/spacebuilder13/vibe-coding-stack.git
 # Point your editor/agent at this folder or copy AGENTS.md + .cursor into a product repo
 ```
+
+## Clean narrative demo (Markdown + visual flow)
+
+Open the two artifacts below to see the "consumable" style in practice:
+
+- `docs/mde-agent-flow.md` for a static, readable architecture explainer.
+- `notebooks/agent_flow_demo.ipynb` for a live notebook where sections are:
+  `Problem -> Architecture -> Diagram -> Runnable trace`.
 
 ## Remote
 

@@ -13,7 +13,8 @@ pip install -r requirements.txt
 python scripts/crawl_to_obsidian.py \
   --base-url "https://example.com" \
   --vault "$HOME/Projects/research-vaults/example-com/vault" \
-  --marketing-limit 300
+  --marketing-limit 300 \
+  --zen-audit
 
 # Optional: explicit blog/posts sitemap (gzip OK)
 python scripts/crawl_to_obsidian.py \
@@ -38,6 +39,8 @@ python scripts/generate_hubs.py --vault "$HOME/Projects/research-vaults/example-
 | `--workers` | Thread pool size (default 6) |
 | `--insecure` | Disable TLS verify — **local dev only** |
 | `--disallow-prefix` | Repeatable; merged with robots.txt `Disallow` for `User-agent: *` |
+| `--zen-audit` | Auto-generate ZEN audit docs in `00-meta/` |
+| `--zen-target-url` | Seed scorecard with a specific URL (default first queued URL) |
 
 ## UX audit pack
 

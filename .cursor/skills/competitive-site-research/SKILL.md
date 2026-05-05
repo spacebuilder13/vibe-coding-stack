@@ -27,7 +27,7 @@ description: >-
    python scripts/crawl_to_obsidian.py --base-url "https://example.com" --vault /path/to/vault
    ```
 
-   Optional: `--posts-sitemap URL`, `--marketing-limit N`, `--articles-limit N`, `--articles-only`, `--insecure` (dev TLS only).
+   Optional: `--posts-sitemap URL`, `--marketing-limit N`, `--articles-limit N`, `--articles-only`, `--insecure` (dev TLS only), `--zen-audit`, `--zen-target-url URL`.
 
 2. **Hubs + IA** (after crawl):
 
@@ -36,6 +36,18 @@ description: >-
    ```
 
 3. **UX screenshots** (MCP `cursor-ide-browser`): navigate key URLs, full-page PNGs under `vault/assets/ux-audit/`, document in `vault/UX-AUDIT-PACK.md` (see `prompts/competitive-research-agent.md` for the table + summary pattern).
+4. **ZEN design-system audit extension** (new): produce a principle rubric, page-level pass/fail scoring, and tool-level UX logic notes.
+
+   Required docs:
+   - `vault/00-meta/ZEN-DESIGN-PRINCIPLES-RUBRIC.md`
+   - `vault/00-meta/ZEN-AUDIT-SCORECARD.md`
+   - `vault/00-meta/ZEN-AUDIT-FINDINGS.md`
+
+   Recommended scoring model:
+   - `PASS` = principle clearly satisfied with source evidence.
+   - `PARTIAL` = principle present but inconsistent or fragile.
+   - `FAIL` = principle absent, contradictory, or blocked by UX copy/flow.
+   - confidence tags: `high | medium | low`.
 
 ## Output contract
 
@@ -47,6 +59,9 @@ description: >-
 | `vault/00-meta/` | `url-inventory.md`, `CRAWL_LOG.md`, `IA-outline.md` |
 | `vault/assets/ux-audit/` | Screenshots |
 | `vault/UX-AUDIT-PACK.md` | Image index + IA + journeys |
+| `vault/00-meta/ZEN-DESIGN-PRINCIPLES-RUBRIC.md` | Principle definitions + evaluation logic |
+| `vault/00-meta/ZEN-AUDIT-SCORECARD.md` | URL-by-principle score matrix |
+| `vault/00-meta/ZEN-AUDIT-FINDINGS.md` | What is working vs not working + prioritized fixes |
 
 ## Rules
 
