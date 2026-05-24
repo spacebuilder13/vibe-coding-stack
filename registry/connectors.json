@@ -43,7 +43,7 @@
       "domain": "deployment",
       "docs": "domains/deployment.md",
       "cost_tier": "low",
-      "used_in": ["project-sandy", "project-insurance", "project-ob"]
+      "used_in": ["project-sandy", "project-insurance", "project-ob", "project-om-shanti"]
     },
     {
       "id": "cloudflare",
@@ -108,7 +108,19 @@
       "domain": "knowledge",
       "docs": "domains/knowledge.md",
       "cost_tier": "low",
-      "used_in": ["project-sandy", "project-insurance", "project-ob"]
+      "used_in": ["project-sandy", "project-insurance", "project-ob", "project-om-shanti"]
+    },
+    {
+      "id": "mobbin",
+      "name": "Mobbin MCP",
+      "purpose": "Search 600k+ app screens, flows, and sites for design reference",
+      "env_vars": [],
+      "mcp_server": "Mobbin",
+      "mcp_url": "https://api.mobbin.com/mcp",
+      "domain": "design",
+      "docs": "patterns/mobbin-design-capture.md",
+      "cost_tier": "low",
+      "used_in": ["project-om-shanti"]
     },
     {
       "id": "stripe",

@@ -208,6 +208,15 @@
       "avoid_when": "Build already scoped and approved",
       "cost": "medium",
       "chains_to": []
+    },
+    {
+      "id": "design-capture",
+      "trigger": "/design-capture",
+      "domain": "design",
+      "when": "Need Mobbin inspiration capture + optional Gemini assets for MVP UI",
+      "avoid_when": "Magic Patterns board already canonical for the project",
+      "cost": "medium",
+      "chains_to": ["/design-html"]
     }
   ]
 }

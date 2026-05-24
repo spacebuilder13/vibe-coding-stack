@@ -13,6 +13,8 @@ Auth: Google login via Supabase.
 | Supperclubbing | https://supperclubbing.vercel.app | Supper club signup, management, and marketing blog. | 2026-04-28 |
 | Project OB — BPS Advisory | https://project-ob.vercel.app | Financial advisory dashboard for Bansali Packing Services. | 2026-04-28 |
 | CoinQuest — Expense Tracker | https://rawcdn.githack.com/spacebuilder13/vibe-coding-stack/88afcfaf5304f16218da68f757e5b1f74a03236e/apps/expense-tracker/index.html | Gamified daily expense tracker — log expenses, earn XP, unlock 20 achievements, get weekly insights. | 2026-05-04 |
+| Jain Menu | https://jain-menu.vercel.app | Daily Jain recipe picker. Weather + novelty + price scored. 3 options daily with YT shorts. WhatsApp share to cook. | 2026-05-03 |
+| Om Shanti × ZMS | https://project-om-shanti.vercel.app | B2B partnership landing + sample Om Shanti Finserv advisory site. NLM-grounded M1. | 2026-05-24 |
 
 ---
 

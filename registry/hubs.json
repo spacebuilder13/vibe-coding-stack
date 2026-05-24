@@ -13,6 +13,32 @@
       "claude_project": "https://claude.ai/project/019aee6f-6c4a-7667-9184-2e5198079bae",
       "notebooklm": "https://notebooklm.google.com/notebook/44eb2cdb-30a4-4b33-90ca-cf043e527d87",
       "created": "2026-05-05"
+    },
+    {
+      "id": "awag-brand",
+      "title": "AWAG — Aren't We All Gods",
+      "type": "repo",
+      "repo": "spacebuilder13/project-awag",
+      "local_path": "/Users/jarvis/Documents/Builder/project-awag",
+      "knowledge_path": "knowledge/brand/",
+      "source_design_url": "https://www.magicpatterns.com/c/5diaefywut8yxfgmdbwjvv",
+      "last_verified": "2026-05-20",
+      "notes": "Conscious streetwear brand. Phase 1 scaffold; Next.js site Phase 2."
+    },
+    {
+      "id": "om-shanti-finserv",
+      "title": "Om Shanti Finserv × Zen Money Studio",
+      "type": "repo",
+      "repo": "spacebuilder13/project-om-shanti",
+      "local_path": "/Users/jarvis/Documents/Builder/project-om-shanti",
+      "knowledge_path": "knowledge/",
+      "notebooklm_urls": [
+        "https://notebooklm.google.com/notebook/64f336ac-cbcb-4345-ba33-e01365a510cf"
+      ],
+      "engagement_phase": "M1",
+      "client_poc": "Ishika",
+      "last_verified": "2026-05-24",
+      "notes": "B2B autonomous growth engagement. Priority: dream items 7, 6, 5."
     }
   ]
 }
