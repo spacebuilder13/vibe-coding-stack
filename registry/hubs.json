@@ -39,6 +39,41 @@
       "client_poc": "Ishika",
       "last_verified": "2026-05-24",
       "notes": "B2B autonomous growth engagement. Priority: dream items 7, 6, 5."
+    },
+    {
+      "id": "max-spare-discovery",
+      "title": "Max Spare — AI Discovery Hub",
+      "type": "repo",
+      "repo": "private (local only)",
+      "local_path": "/Users/jarvis/Documents/Builder/project-max-spare",
+      "knowledge_path": "knowledge/",
+      "design_system": "zen-sandy",
+      "stack": "react-vite-ts-tailwind",
+      "deployment": "vercel",
+      "url": "https://project-max-spare.vercel.app",
+      "engagement_phase": "M1 — discovery (give a lot, confirm Meeting 2)",
+      "client_poc": "Sabharwal family / Max Spare leadership",
+      "confidential": true,
+      "last_verified": "2026-05-31",
+      "notes": "Asia's largest seal manufacturer (~Rs 337 Cr). Borrows module craft + Zen design from Project OB (BPS); carries NONE of BPS content. All data illustrative/public. Worked by Utsav + Pooja."
+    },
+    {
+      "id": "janata-masala",
+      "title": "Janata Masala × Spaceships & Atoms",
+      "type": "repo",
+      "repo": "spacebuilder13/project-janata-masala",
+      "local_path": "/Users/jarvis/Documents/Builder/project-janata-masala",
+      "knowledge_path": "knowledge/",
+      "notebooklm_urls": [
+        "https://notebooklm.google.com/notebook/b5db93de-0a0e-49ea-9cd9-6009beabf6ed"
+      ],
+      "design_system": "Sandy — zen-money-manager-d8a17b9e",
+      "stack": "react-vite-ts-tanstack-router",
+      "deployment": "vercel",
+      "url": "https://project-janata-masala.vercel.app",
+      "engagement_phase": "M1 harness",
+      "last_verified": "2026-06-11",
+      "notes": "Agentic commerce workspace. Adventure + Explorations (WhatsApp, Voice, Architecture). Claude + ElevenLabs API routes."
     }
   ]
 }

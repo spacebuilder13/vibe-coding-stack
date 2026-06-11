@@ -13,3 +13,31 @@ hubs:
     notebooklm: https://notebooklm.google.com/notebook/44eb2cdb-30a4-4b33-90ca-cf043e527d87
     created: 2026-05-05
     notes: Founder dashboard for The Quirky I. Mobile-first. Sandy design system applied.
+  - id: max-spare-discovery
+    name: Max Spare — AI Discovery Hub
+    repo: private (local only)
+    local: /Users/jarvis/Documents/Builder/project-max-spare
+    design_system: zen-sandy
+    stack: react-vite-ts-tailwind
+    deployment: vercel
+    url: https://project-max-spare.vercel.app
+    created: 2026-05-31
+    confidential: true
+    notes: >-
+      Discovery hub for Max Spare (Asia's largest seal manufacturer, ~Rs 337 Cr). Opportunity
+      framing; borrows Zen design + module craft from Project OB (BPS) with zero BPS content.
+      All data illustrative/public. Meeting 1: give a lot, confirm Meeting 2.
+  - id: janata-masala
+    name: Janata Masala × Spaceships & Atoms
+    repo: https://github.com/spacebuilder13/project-janata-masala
+    local: /Users/jarvis/Documents/Builder/project-janata-masala
+    design_system: zen-sandy
+    design_system_repo: /Users/jarvis/Documents/Builder/zen-money-manager-d8a17b9e
+    stack: react-vite-ts-tanstack-router
+    deployment: vercel
+    url: https://project-janata-masala.vercel.app
+    notebooklm: https://notebooklm.google.com/notebook/b5db93de-0a0e-49ea-9cd9-6009beabf6ed
+    created: 2026-06-11
+    notes: >-
+      Agentic commerce engagement workspace. Adventure (meetings/decisions/scope) +
+      Explorations (WhatsApp ChatAgent, VoiceAgent, architecture). Sandy graph paper + JM spice accents.
