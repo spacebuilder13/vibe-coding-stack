@@ -26,19 +26,21 @@ echo ""
 
 # ── 1. Check / create Anthropic credential ──────────────────────────────────
 echo "[1/4] Creating Anthropic API credential..."
+ANTHROPIC_DATA=$(python3 -c "import json,sys; print(json.dumps(json.dumps({'name':'x-api-key','value':sys.argv[1],'allowedDomains':[]}))" "$ANTHROPIC_KEY")
 ANTHROPIC_CRED=$(curl -sf -X POST "$API/credentials" \
   -H "X-N8N-API-KEY: $KEY" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"Anthropic API\",\"type\":\"httpHeaderAuth\",\"data\":{\"name\":\"x-api-key\",\"value\":\"$ANTHROPIC_KEY\",\"allowedDomains\":[]}}")
+  -d "{\"name\":\"Anthropic API\",\"type\":\"httpHeaderAuth\",\"data\":$ANTHROPIC_DATA}")
 ANTHROPIC_ID=$(echo "$ANTHROPIC_CRED" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
 echo "   ✓ Anthropic credential ID: $ANTHROPIC_ID"
 
 # ── 2. Create Attio credential ───────────────────────────────────────────────
 echo "[2/4] Creating Attio API credential..."
+ATTIO_DATA=$(python3 -c "import json,sys; print(json.dumps(json.dumps({'name':'Authorization','value':'Bearer '+sys.argv[1],'allowedDomains':[]}))" "$ATTIO_TOKEN")
 ATTIO_CRED=$(curl -sf -X POST "$API/credentials" \
   -H "X-N8N-API-KEY: $KEY" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"Attio API\",\"type\":\"httpHeaderAuth\",\"data\":{\"name\":\"Authorization\",\"value\":\"Bearer $ATTIO_TOKEN\",\"allowedDomains\":[]}}")
+  -d "{\"name\":\"Attio API\",\"type\":\"httpHeaderAuth\",\"data\":$ATTIO_DATA}")
 ATTIO_ID=$(echo "$ATTIO_CRED" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
 echo "   ✓ Attio credential ID: $ATTIO_ID"
 
