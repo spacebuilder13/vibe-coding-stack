@@ -8,5 +8,10 @@
         "N8N_API_KEY": "REPLACE_WITH_N8N_API_KEY"
       }
     }
+  },
+  "sandbox": {
+    "network": {
+      "allowedDomains": ["whenmoney.app.n8n.cloud"]
+    }
   }
 }
