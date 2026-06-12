@@ -9,6 +9,8 @@ tools/**/__pycache__/
 .env
 .env.*
 !.env.example
+.claude/settings.local.json
+tools/n8n-mcp/node_modules/
 *.pem
 *.key
 id_rsa
