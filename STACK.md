@@ -52,6 +52,16 @@ BUILD.md    ← agent-written spec; human reviews before code starts
 - Catalog: `app-store/STORE.md`
 - Publish workflow: `app-store/publish.md`
 
+## Automation
+
+| Item | Detail |
+|------|--------|
+| Workflow engine | n8n.cloud (`whenmoney.app.n8n.cloud`) |
+| MCP server | `tools/n8n-mcp/` — 10 tools: list/get/create/update/activate/execute/poll |
+| Skill | `.cursor/skills/n8n/SKILL.md` · trigger: `/n8n` |
+| Workflow source | `workflows/n8n/` (version-controlled JSON) |
+| Connector docs | `registry/connectors.json` → id: `n8n`, `attio` |
+
 ## Architecture boards
 
 - Ingest v3: `boards/ingest-architecture-board/` · [live](https://spacebuilder13.github.io/ingest-architecture-board/)

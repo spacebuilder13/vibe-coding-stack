@@ -217,6 +217,17 @@
       "avoid_when": "Magic Patterns board already canonical for the project",
       "cost": "medium",
       "chains_to": ["/design-html"]
+    },
+    {
+      "id": "n8n",
+      "trigger": "/n8n",
+      "domain": "automation",
+      "when": "Need to build, deploy, run, debug, or analyse an n8n workflow; any task involving automation, CRM sync, batch processing, or workflow orchestration",
+      "avoid_when": "Task is a direct API call or code change that doesn't involve n8n",
+      "cost": "low",
+      "requires_mcp": "n8n-mcp",
+      "skill_doc": ".cursor/skills/n8n/SKILL.md",
+      "chains_to": []
     }
   ]
 }

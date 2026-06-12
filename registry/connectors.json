@@ -173,6 +173,36 @@
       "docs": "domains/deployment.md",
       "cost_tier": "low",
       "used_in": ["project-insurance", "project-sandy"]
+    },
+    {
+      "id": "n8n",
+      "name": "n8n Workflow Automation",
+      "purpose": "Build, deploy, execute, and debug automation workflows from Claude Code",
+      "env_vars": ["N8N_BASE_URL", "N8N_API_KEY"],
+      "instance": "https://whenmoney.app.n8n.cloud",
+      "mcp_server": "n8n-mcp",
+      "mcp_path": "tools/n8n-mcp/index.js",
+      "api_base": "https://whenmoney.app.n8n.cloud/api/v1",
+      "domain": "automation",
+      "cost_tier": "low",
+      "used_in": ["when-travel-crm"]
+    },
+    {
+      "id": "attio",
+      "name": "Attio CRM",
+      "purpose": "People/company CRM — create, update, and query records and list entries",
+      "env_vars": ["ATTIO_API_KEY"],
+      "api_base": "https://api.attio.com/v2",
+      "auth": "Bearer token via httpHeaderAuth credential in n8n",
+      "known_lists": {
+        "when_travel_clients": "4bd161bd-2b58-4c11-9ee5-004257444bb2"
+      },
+      "known_objects": {
+        "people_field_slugs": ["name", "name_2", "destination_city", "time_to_travel", "budget_range", "blockers_pain_point", "jtbd", "journey_stage", "memorable_quotes"]
+      },
+      "domain": "automation",
+      "cost_tier": "low",
+      "used_in": ["when-travel-crm"]
     }
   ]
 }
