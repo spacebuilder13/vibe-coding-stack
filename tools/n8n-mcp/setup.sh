@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
-# One-shot setup: creates n8n credentials + deploys CRM sync workflow
-# Run from any machine with network access to whenmoney.app.n8n.cloud
+# Deploy CRM Sync from Transcripts v3 workflow to n8n
 #
 # Usage:
-#   N8N_API_KEY=<your-key> ANTHROPIC_API_KEY=<key> ATTIO_API_KEY=<bearer-token> bash tools/n8n-mcp/setup.sh
+#   N8N_API_KEY=<key> ANTHROPIC_API_KEY=<key> ATTIO_API_KEY=<token> bash tools/n8n-mcp/setup.sh
 #
-# Or export vars first:
-#   export N8N_API_KEY=...
-#   export ANTHROPIC_API_KEY=...
-#   export ATTIO_API_KEY=...   (just the token, without "Bearer ")
-#   bash tools/n8n-mcp/setup.sh
+# Keys are substituted in-memory before deploy — never written to disk.
 
 set -e
 
@@ -24,68 +19,42 @@ WORKFLOW_JSON="$(cd "$(dirname "$0")/../.." && pwd)/workflows/n8n/crm-sync-from-
 echo "→ n8n instance: $N8N_BASE"
 echo ""
 
-# ── 1. Check / create Anthropic credential ──────────────────────────────────
-echo "[1/4] Creating Anthropic API credential..."
-ANTHROPIC_DATA=$(python3 -c "import json,sys; print(json.dumps(json.dumps({'name':'x-api-key','value':sys.argv[1],'allowedDomains':[]}))" "$ANTHROPIC_KEY")
-ANTHROPIC_CRED=$(curl -sf -X POST "$API/credentials" \
-  -H "X-N8N-API-KEY: $KEY" \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"Anthropic API\",\"type\":\"httpHeaderAuth\",\"data\":$ANTHROPIC_DATA}")
-ANTHROPIC_ID=$(echo "$ANTHROPIC_CRED" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
-echo "   ✓ Anthropic credential ID: $ANTHROPIC_ID"
+echo "[1/1] Deploying workflow..."
 
-# ── 2. Create Attio credential ───────────────────────────────────────────────
-echo "[2/4] Creating Attio API credential..."
-ATTIO_DATA=$(python3 -c "import json,sys; print(json.dumps(json.dumps({'name':'Authorization','value':'Bearer '+sys.argv[1],'allowedDomains':[]}))" "$ATTIO_TOKEN")
-ATTIO_CRED=$(curl -sf -X POST "$API/credentials" \
-  -H "X-N8N-API-KEY: $KEY" \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"Attio API\",\"type\":\"httpHeaderAuth\",\"data\":$ATTIO_DATA}")
-ATTIO_ID=$(echo "$ATTIO_CRED" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
-echo "   ✓ Attio credential ID: $ATTIO_ID"
-
-# ── 3. Patch workflow JSON with real credential IDs ──────────────────────────
-echo "[3/4] Patching workflow JSON with credential IDs..."
-PATCHED=$(python3 - "$WORKFLOW_JSON" "$ANTHROPIC_ID" "$ATTIO_ID" <<'PYEOF'
+# Substitute placeholders in-memory, then POST directly to n8n
+DEPLOY=$(python3 - "$WORKFLOW_JSON" "$ANTHROPIC_KEY" "$ATTIO_TOKEN" <<'PYEOF'
 import sys, json
 
-path, ant_id, att_id = sys.argv[1], sys.argv[2], sys.argv[3]
+path, anthropic_key, attio_token = sys.argv[1], sys.argv[2], sys.argv[3]
 with open(path) as f:
     wf = json.load(f)
 
-for node in wf.get("nodes", []):
-    creds = node.get("credentials", {})
-    if "httpHeaderAuth" in creds:
-        name = creds["httpHeaderAuth"].get("name", "")
-        if name == "Anthropic API":
-            creds["httpHeaderAuth"]["id"] = ant_id
-        elif name == "Attio API":
-            creds["httpHeaderAuth"]["id"] = att_id
-
-print(json.dumps(wf))
+wf_str = json.dumps(wf)
+wf_str = wf_str.replace("ANTHROPIC_API_KEY_PLACEHOLDER", anthropic_key)
+wf_str = wf_str.replace("ATTIO_API_KEY_PLACEHOLDER", attio_token)
+print(wf_str)
 PYEOF
 )
-echo "   ✓ Credential IDs patched"
 
-# ── 4. Deploy workflow ───────────────────────────────────────────────────────
-echo "[4/4] Deploying workflow to n8n..."
-DEPLOY=$(echo "$PATCHED" | curl -sf -X POST "$API/workflows" \
+RESPONSE=$(echo "$DEPLOY" | curl -s -w "\n%{http_code}" -X POST "$API/workflows" \
   -H "X-N8N-API-KEY: $KEY" \
   -H "Content-Type: application/json" \
   -d @-)
-WF_ID=$(echo "$DEPLOY" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
+
+HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+BODY=$(echo "$RESPONSE" | head -n -1)
+
+if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
+  echo "   ✗ Deploy failed (HTTP $HTTP_CODE)"
+  echo "   $BODY"
+  exit 1
+fi
+
+WF_ID=$(echo "$BODY" | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
 echo "   ✓ Workflow deployed — ID: $WF_ID"
 
-# ── Summary ──────────────────────────────────────────────────────────────────
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "Setup complete!"
-echo "  Anthropic credential: $ANTHROPIC_ID"
-echo "  Attio credential:     $ATTIO_ID"
-echo "  Workflow ID:          $WF_ID"
-echo ""
-echo "Test run:"
-echo "  curl -X POST \"$API/workflows/$WF_ID/run\" -H \"X-N8N-API-KEY: \$N8N_API_KEY\" -H \"Content-Type: application/json\" -d '{}'"
-echo ""
-echo "To use from Claude Code, update .claude/settings.local.json N8N_API_KEY if needed."
+echo "Done! Workflow ID: $WF_ID"
+echo "Open: $N8N_BASE/workflow/$WF_ID"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

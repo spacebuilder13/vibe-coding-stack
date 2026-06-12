@@ -104,7 +104,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Decode binary output from Google Drive native download\nconst binaryData = $binary?.data;\nlet transcript = '';\nif (binaryData?.data) {\n  transcript = Buffer.from(binaryData.data, 'base64').toString('utf-8').substring(0, 4000);\n}\n\nconst requestBody = JSON.stringify({\n  model: 'claude-haiku-4-5-20251001',\n  max_tokens: 1024,\n  system: 'You are processing call transcripts for WHEN Travel, a travel savings coaching platform. Extract the following as a JSON object only \\u2014 no preamble, no markdown, no code fences.\\n\\n{\"name\": \"client first name\", \"destination\": \"travel destination or null\", \"timeline\": \"when they want to travel or null\", \"budget_range\": \"total trip budget mentioned or null\", \"emotional_blocker\": \"main fear or hesitation around money or travel\", \"jobs_to_be_done\": \"transformation they want from this\", \"memorable_quote\": \"most emotionally resonant thing they said\", \"pipeline_stage\": \"one of: Discovery Done | Plan Delivered | Active Saver | Milestone Unlocked | Trip Completed\"}\\n\\nStage rules:\\n- Discovery Done: first intake call, no plan yet delivered\\n- Plan Delivered: coach mentions sending a plan\\n- Active Saver: client tracking savings progress\\n- Milestone Unlocked: client has booked flights or accommodation\\n- Trip Completed: trip has already happened',\n  messages: [{ role: 'user', content: transcript }]\n});\n\nreturn { json: { requestBody, filename: $('Loop Docs').item.json.name } };"
+        "jsCode": "// Decode binary output from Google Drive native download\nconst binaryData = $binary?.data;\nlet transcript = '';\nif (binaryData?.data) {\n  transcript = Buffer.from(binaryData.data, 'base64').toString('utf-8').substring(0, 4000);\n}\n\nconst requestBody = JSON.stringify({\n  model: 'claude-haiku-4-5-20251001',\n  max_tokens: 1024,\n  system: 'You are processing call transcripts for WHEN Travel, a travel savings coaching platform. Extract the following as a JSON object only — no preamble, no markdown, no code fences.\\n\\n{\"name\": \"client first name\", \"destination\": \"travel destination or null\", \"timeline\": \"when they want to travel or null\", \"budget_range\": \"total trip budget mentioned or null\", \"emotional_blocker\": \"main fear or hesitation around money or travel\", \"jobs_to_be_done\": \"transformation they want from this\", \"memorable_quote\": \"most emotionally resonant thing they said\", \"pipeline_stage\": \"one of: Discovery Done | Plan Delivered | Active Saver | Milestone Unlocked | Trip Completed\"}\\n\\nStage rules:\\n- Discovery Done: first intake call, no plan yet delivered\\n- Plan Delivered: coach mentions sending a plan\\n- Active Saver: client tracking savings progress\\n- Milestone Unlocked: client has booked flights or accommodation\\n- Trip Completed: trip has already happened',\n  messages: [{ role: 'user', content: transcript }]\n});\n\nreturn { json: { requestBody, filename: $('Loop Docs').item.json.name } };"
       },
       "id": "aa000006-0006-0006-0006-000000000006",
       "name": "Build Claude Request",
@@ -116,13 +116,12 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.anthropic.com/v1/messages",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
+            { "name": "x-api-key", "value": "ANTHROPIC_API_KEY_PLACEHOLDER" },
             { "name": "anthropic-version", "value": "2023-06-01" },
-            { "name": "Content-Type", "value": "application/json" }
+            { "name": "content-type", "value": "application/json" }
           ]
         },
         "sendBody": true,
@@ -137,13 +136,7 @@
       "typeVersion": 4.4,
       "position": [1320, 120],
       "retryOnFail": true,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "ANTHROPIC_CREDENTIAL_ID",
-          "name": "Anthropic API"
-        }
-      }
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -159,8 +152,13 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.attio.com/v2/objects/people/records/query",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
@@ -172,17 +170,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [1760, 120],
-      "executeOnce": true,
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "ATTIO_CREDENTIAL_ID",
-          "name": "Attio API"
-        }
-      }
+      "executeOnce": true
     },
     {
       "parameters": {
-        "jsCode": "const newData = $('Parse Response').item.json;\nconst allRecords = $('Fetch All People').item.json.data;\nconst filename = $('Loop Docs').item.json.name;\nconst fallbackName = filename.split('_Session')[0].trim();\n\nif (!newData.name && fallbackName) {\n  newData.name = fallbackName;\n}\n\nconst existing = allRecords.find(r =>\n  r.values.name &&\n  r.values.name[0] &&\n  r.values.name[0].full_name === newData.name\n);\n\nif (!existing) {\n  return {\n    json: {\n      isNew: 'true',\n      name: newData.name || fallbackName,\n      destination: newData.destination,\n      timeline: newData.timeline,\n      budget_range: newData.budget_range,\n      emotional_blocker: newData.emotional_blocker,\n      jobs_to_be_done: newData.jobs_to_be_done,\n      memorable_quote: newData.memorable_quote,\n      pipeline_stage: newData.pipeline_stage\n    }\n  };\n}\n\n// Existing record: append multi-value fields rather than overwriting\nconst blockers = (existing.values.blockers_pain_point || []).map(b => b.value);\nif (newData.emotional_blocker) blockers.push(newData.emotional_blocker);\n\nconst jtbd = (existing.values.jtbd || []).map(j => j.value);\nif (newData.jobs_to_be_done) jtbd.push(newData.jobs_to_be_done);\n\nconst quotes = (existing.values.memorable_quotes || []).map(q => q.value);\nif (newData.memorable_quote) quotes.push(newData.memorable_quote);\n\nconst values = {};\nif (newData.pipeline_stage) values.journey_stage = [{ value: newData.pipeline_stage }];\nif (newData.timeline) values.time_to_travel = [{ value: newData.timeline }];\nif (newData.budget_range) values.budget_range = [{ value: newData.budget_range }];\nif (newData.destination) values.destination_city = [{ value: newData.destination }];\nif (newData.name) values.name_2 = [{ value: newData.name }];\nif (blockers.length > 0) values.blockers_pain_point = [{ value: blockers.join('\\n\\n') }];\nif (jtbd.length > 0) values.jtbd = [{ value: jtbd.join('\\n\\n') }];\nif (quotes.length > 0) values.memorable_quotes = [{ value: quotes.join('\\n\\n') }];\n\nreturn {\n  json: {\n    isNew: 'false',\n    recordId: existing.id.record_id,\n    body: JSON.stringify({ data: { values } })\n  }\n};"
+        "jsCode": "const newData = $('Parse Response').item.json;\nconst allRecords = $('Fetch All People').item.json.data;\nconst filename = $('Loop Docs').item.json.name;\nconst fallbackName = filename.split('_Session')[0].trim();\n\nif (!newData.name && fallbackName) {\n  newData.name = fallbackName;\n}\n\nconst existing = allRecords.find(r =>\n  r.values.name &&\n  r.values.name[0] &&\n  r.values.name[0].full_name === newData.name\n);\n\nif (!existing) {\n  return {\n    json: {\n      isNew: 'true',\n      name: newData.name || fallbackName,\n      destination: newData.destination,\n      timeline: newData.timeline,\n      budget_range: newData.budget_range,\n      emotional_blocker: newData.emotional_blocker,\n      jobs_to_be_done: newData.jobs_to_be_done,\n      memorable_quote: newData.memorable_quote,\n      pipeline_stage: newData.pipeline_stage\n    }\n  };\n}\n\nconst blockers = (existing.values.blockers_pain_point || []).map(b => b.value);\nif (newData.emotional_blocker) blockers.push(newData.emotional_blocker);\n\nconst jtbd = (existing.values.jtbd || []).map(j => j.value);\nif (newData.jobs_to_be_done) jtbd.push(newData.jobs_to_be_done);\n\nconst quotes = (existing.values.memorable_quotes || []).map(q => q.value);\nif (newData.memorable_quote) quotes.push(newData.memorable_quote);\n\nconst values = {};\nif (newData.pipeline_stage) values.journey_stage = [{ value: newData.pipeline_stage }];\nif (newData.timeline) values.time_to_travel = [{ value: newData.timeline }];\nif (newData.budget_range) values.budget_range = [{ value: newData.budget_range }];\nif (newData.destination) values.destination_city = [{ value: newData.destination }];\nif (newData.name) values.name_2 = [{ value: newData.name }];\nif (blockers.length > 0) values.blockers_pain_point = [{ value: blockers.join('\\n\\n') }];\nif (jtbd.length > 0) values.jtbd = [{ value: jtbd.join('\\n\\n') }];\nif (quotes.length > 0) values.memorable_quotes = [{ value: quotes.join('\\n\\n') }];\n\nreturn {\n  json: {\n    isNew: 'false',\n    recordId: existing.id.record_id,\n    body: JSON.stringify({ data: { values } })\n  }\n};"
       },
       "id": "aa000010-0010-0010-0010-000000000010",
       "name": "Match and Decide",
@@ -225,8 +217,13 @@
       "parameters": {
         "method": "POST",
         "url": "https://api.attio.com/v2/objects/people/records",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
@@ -237,20 +234,19 @@
       "name": "Create Person",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [2420, -120],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "ATTIO_CREDENTIAL_ID",
-          "name": "Attio API"
-        }
-      }
+      "position": [2420, -120]
     },
     {
       "parameters": {
         "method": "POST",
         "url": "https://api.attio.com/v2/lists/4bd161bd-2b58-4c11-9ee5-004257444bb2/entries",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
@@ -261,20 +257,19 @@
       "name": "Add to List",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [2640, -120],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "ATTIO_CREDENTIAL_ID",
-          "name": "Attio API"
-        }
-      }
+      "position": [2640, -120]
     },
     {
       "parameters": {
         "method": "PATCH",
         "url": "={{ \"https://api.attio.com/v2/objects/people/records/\" + $json.recordId }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "application/json",
@@ -285,26 +280,20 @@
       "name": "Update Person",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [2420, 120],
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "ATTIO_CREDENTIAL_ID",
-          "name": "Attio API"
-        }
-      }
+      "position": [2420, 120]
     },
     {
       "parameters": {
-        "content": "## CRM Sync from Transcripts v3\n\n**What changed from v1:**\n- No copy-before-export (saves 1 API call per doc)\n- Native Google Drive download node (no raw HTTP)\n- No Wait node — retryOnFail handles rate limits\n- Secrets in credentials, not hardcoded headers\n- Update Person now loops back (bug fix from v1)\n- Haiku model for cost-efficient extraction\n\n**Credentials to set up in n8n:**\n1. Google Drive OAuth2 API (reuse existing)\n2. `Anthropic API` — httpHeaderAuth, header: x-api-key\n3. `Attio API` — httpHeaderAuth, header: Authorization, value: Bearer <token>\n\n**Field slugs:** name · name_2 · destination_city · time_to_travel · budget_range · blockers_pain_point · jtbd · journey_stage · memorable_quotes\n\n**Attio list:** 4bd161bd-2b58-4c11-9ee5-004257444bb2\n**GDrive folder:** 1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY",
-        "height": 240,
-        "width": 460,
+        "content": "## CRM Sync from Transcripts v3\n\nReads all Google Docs in the transcripts folder, extracts CRM fields via Claude Haiku, then creates or updates records in Attio.\n\n**Google Drive folder:** 1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY\n**Attio list:** 4bd161bd-2b58-4c11-9ee5-004257444bb2\n\n**Field slugs:** name · name_2 · destination_city · time_to_travel · budget_range · blockers_pain_point · jtbd · journey_stage · memorable_quotes",
+        "height": 180,
+        "width": 420,
         "color": 3
       },
       "id": "aa000015-0015-0015-0015-000000000015",
       "name": "README",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [0, -300]
+      "position": [0, -280]
     }
   ],
   "pinData": {},
@@ -364,7 +353,7 @@
     "binaryMode": "separate"
   },
   "meta": {
-    "templateCredsSetupCompleted": false,
+    "templateCredsSetupCompleted": true,
     "instanceId": "ad826709951b1d77e0bc55cdca05f4aac3d499bd6387bcef2412a9cdb171c483"
   },
   "tags": []
