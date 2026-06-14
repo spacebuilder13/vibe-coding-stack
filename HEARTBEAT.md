@@ -8,6 +8,10 @@
 - [ ] Check if BUILD.md has an in-progress spec
 - [ ] Check app-store/STORE.md — any apps missing URLs?
 
+## Spar ritual — OSF harness rollout
+
+If `PROGRAM.md` is empty **and** `docs/harness-learnings-from-osf.md` has unchecked rollout items → run `docs/SPAR_RITUAL.md` (spar with Utsav before cross-repo changes).
+
 ## On every ship
 - [ ] URL added to BUILD.md checklist
 - [ ] App registered in app-store/STORE.md

@@ -6,6 +6,8 @@ Checklist for onboarding a new B2B client engagement pod (derived from project-o
 
 - [ ] Create `project-{client-slug}` under Builder
 - [ ] Write `PROGRAM.md` (2–3 line brief)
+- [ ] Create Tier 0: `SOUL.md` + `STACK.md` (see `project-max-spare` or OSF pattern)
+- [ ] Document audiences in `STACK.md` — see `docs/repo-deploy-mental-model.md` (2 repos, N Vercel windows)
 - [ ] Init `docs/STACK_DELTA.md` for vibe-coding-stack feedback
 - [ ] Private GitHub repo + `.gitignore` + `.env.example`
 

@@ -8,6 +8,7 @@ alwaysApply: false
 
 When working on repos that adopt this stack:
 
+0. Before deploy or new repo: read `docs/repo-deploy-mental-model.md` (repo = kitchen, Vercel = window, audience first).
 1. Read project `README` / `CLAUDE.md` first; then check `vibe-coding-stack` or copied `AGENTS.md` if present.
 2. Use **knowledge hubs** (manifests, Notebook LM, Magic Patterns links, architecture boards) as ground truth for product and design history.
 3. For ambiguous work: **short plan + one shippable artifact** in the same session.

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.1 — 2026-06-15
+
+OSF harness learnings + repo/deploy mental model.
+
+- `docs/repo-deploy-mental-model.md` — kitchen/window analogy, audience-first deploy
+- `docs/harness-learnings-from-osf.md` — DSS router, learn hub, rollout checklist
+- `docs/ai-native-org-setup.md` — Meta/Harness/Pod/Client layers
+- `docs/SPAR_RITUAL.md` — org-wide rollout spar with Utsav
+- `HEARTBEAT.md` — spar ritual trigger
+- `registry/hubs.json` + `hubs/manifest.yaml` — om-shanti Phase1 URLs, awag sync
+- `app-store/STORE.md` — OSF pod, client deck, Max Spare rows
+- `workflows/b2b-client-bootstrap.md` — SOUL/STACK + audience table
+
 ## 0.2.0 — 2026-05-03
 
 Breaking restructure. Vibe coding stack redesigned as a universal agent environment
