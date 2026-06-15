@@ -173,3 +173,27 @@ These belong here eventually but are not in v1:
 3. **No CRM API calls outside sink adapters.** Business logic never touches Attio directly.
 4. **New product = new schema file.** Never fork the pipeline.
 5. **Null over invention.** Better empty than wrong.
+
+---
+
+## 10. Known Failure Modes (learned in production)
+
+### 10.1 Name matching must be fuzzy, not exact
+
+CRM records can accumulate partial names from different sources. A record created by an old workflow may have `full_name = "Azharul"` while a new transcript yields `"Azharul Haque"`. Exact string match will miss this and create a duplicate.
+
+**Rule:** Match on `full_name` first. If no exact match, fall back to `first_name` match. Keep the richer (longer) record.
+
+**Cleanup:** Run `tools/attio-ingest/cleanup_duplicates.py --dry-run` to detect orphan partial-name records before each push. Run without `--dry-run` to delete them.
+
+### 10.2 Always verify sink API field names against live API responses
+
+The Attio list entries API returns `parent_record_id`, not `record_id`. Assuming field names without checking the actual response causes silent failures (empty set returned, check is skipped, every record re-tries the list-add on every run).
+
+**Rule:** When reading fields from any API response, log the raw response once in dev and verify field names before shipping.
+
+### 10.3 Commit order must match run order
+
+If extraction and push happen in separate steps, the user must `git pull` between them. If the JSON is updated on the remote after the user already pulled, the push will run against a stale version — new records will silently not exist.
+
+**Rule:** Always print the record count at the start of the push script and tell the user to verify it matches expectations before proceeding. If counts don't match, pull again.

@@ -53,7 +53,8 @@ def fetch_list_entry_ids():
     ids = set()
     for entry in resp.get("data", []):
         try:
-            ids.add(entry["record_id"])
+            # Attio list entries use parent_record_id, not record_id
+            ids.add(entry["parent_record_id"])
         except (KeyError, TypeError):
             pass
     return ids
@@ -67,13 +68,32 @@ def add_to_when_list(record_id):
         }
     })
 
-def find_existing(records, name):
-    name_lower = (name or "").lower()
+def find_existing(records, full_name):
+    """
+    Match by full_name first. If no exact match, fall back to first-name match.
+    This handles cases where an existing Attio record only has a first name
+    (e.g. 'Azharul') while our JSON has the full name ('Azharul Haque').
+    """
+    full_lower  = (full_name or "").strip().lower()
+    first_lower = full_lower.split()[0] if full_lower else ""
+
+    exact_match = None
+    first_match = None
+
     for r in records:
         arr = r.get("values", {}).get("name", [])
-        if arr and (arr[0].get("full_name") or "").lower() == name_lower:
-            return r
-    return None
+        if not arr or not arr[0]:
+            continue
+        existing_full  = (arr[0].get("full_name") or "").strip().lower()
+        existing_first = existing_full.split()[0] if existing_full else ""
+
+        if existing_full == full_lower:
+            exact_match = r
+            break                        # exact match wins immediately
+        if existing_first == first_lower and first_match is None:
+            first_match = r              # keep the first first-name match as fallback
+
+    return exact_match or first_match
 
 def txt(v):
     return [{"value": str(v).strip()}] if v and str(v).strip() else None
@@ -82,7 +102,12 @@ def build_values(d):
     v = {}
     name = d.get("name", "").strip()
     if name:
-        v["name"] = [{"first_name": name.split()[0], "last_name": " ".join(name.split()[1:]), "full_name": name}]
+        parts = name.split(None, 1)
+        v["name"] = [{
+            "first_name": parts[0],
+            "last_name":  parts[1] if len(parts) > 1 else "",
+            "full_name":  name
+        }]
 
     for slug, val in [
         ("source_city",   d.get("source_city")),
@@ -107,19 +132,19 @@ def build_values(d):
 with open(DATA_FILE) as f:
     records = json.load(f)
 
-print(f"→ Loading {len(records)} records from {DATA_FILE}")
+print(f"→ {len(records)} records in {DATA_FILE}")
 print("→ Fetching existing Attio people...")
 all_people = fetch_all_people()
-print(f"   {len(all_people)} existing record(s)")
+print(f"   {len(all_people)} people in Attio")
 
 print("→ Fetching WHEN Travel list members...")
 already_in_list = fetch_list_entry_ids()
-print(f"   {len(already_in_list)} already in list\n")
+print(f"   {len(already_in_list)} already in WHEN Travel list\n")
 
 ok = err = 0
 for d in records:
     if d.get("error"):
-        print(f"   SKIP   {d.get('name')} — extraction failed: {d['error']}")
+        print(f"   SKIP   {d.get('name')} — extraction error: {d['error']}")
         continue
 
     name   = d.get("name", "Unknown").strip()
@@ -128,8 +153,8 @@ for d in records:
     try:
         existing = find_existing(all_people, name)
         if not existing:
-            resp = attio_post("/objects/people/records", {"data": {"values": values}})
-            rid  = resp["data"]["id"]["record_id"]
+            resp   = attio_post("/objects/people/records", {"data": {"values": values}})
+            rid    = resp["data"]["id"]["record_id"]
             action = "CREATE"
         else:
             rid = existing["id"]["record_id"]
@@ -140,15 +165,14 @@ for d in records:
         if rid not in already_in_list:
             try:
                 add_to_when_list(rid)
-                list_status = "+ list"
+                list_tag = "+ list"
             except urllib.error.HTTPError as le:
                 body = le.read().decode()
-                # 409 = already in list (race condition) — safe to ignore
-                list_status = "~ list (already exists)" if le.code == 409 else f"! list err {le.code}"
+                list_tag = "~ list (already)" if le.code == 409 else f"! list err {le.code}"
         else:
-            list_status = "~ list (already in)"
+            list_tag = "~ list (already)"
 
-        print(f"   {action:<6} {name}  [{list_status}]")
+        print(f"   {action:<6} {name}  [{list_tag}]")
         ok += 1
 
     except urllib.error.HTTPError as e:
