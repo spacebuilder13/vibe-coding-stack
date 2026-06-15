@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Create all WHEN Travel CRM fields on the Attio People object.
+# Create WHEN Travel CRM fields on the Attio People object (simplified 8-field set).
 #
 # Usage:
 #   ATTIO_API_KEY=<token> bash tools/attio-setup/create-fields.sh
 #
-# Safe to re-run — already-existing fields are detected (HTTP 409) and skipped.
+# Safe to re-run — already-existing fields (HTTP 409) are silently skipped.
 
 set -e
 
@@ -21,81 +21,16 @@ import urllib.error
 
 token, base_url = sys.argv[1], sys.argv[2]
 
-# (title, api_slug, type)
-# Standard Attio People fields (name, email, phone) are intentionally excluded.
+# Standard Attio People fields (name, email_addresses, phone_numbers) are skipped —
+# they already exist. We only create custom fields.
 FIELDS = [
-    # ── G1 Identity ────────────────────────────────────────────────────────────
-    ("Source",                    "source",                "text"),
-    ("Latest Conversation",       "latest_conversation",   "text"),
-
-    # ── G2 Travel Preferences ──────────────────────────────────────────────────
-    ("Pref: Beach",               "pref_beach",            "checkbox"),
-    ("Pref: Mountain",            "pref_mountain",         "checkbox"),
-    ("Pref: Culture",             "pref_culture",          "checkbox"),
-    ("Pref: Unique / Off-beat",   "pref_unique",           "checkbox"),
-    ("Pref: City",                "pref_city",             "checkbox"),
-    ("Travel Style",              "travel_style",          "text"),
-    ("Trip Budget",               "trip_budget",           "text"),
-
-    # ── G3 Financial ───────────────────────────────────────────────────────────
-    ("Monthly Savings Capacity",  "monthly_savings",       "number"),
-    ("Already Saving?",           "already_saving",        "checkbox"),
-    ("Existing Savings",          "existing_savings",      "text"),
-    ("Savings Instruments",       "savings_instruments",   "text"),
-    ("Cards Owned",               "cards_owned",           "text"),
-
-    # ── G4 Blockers ────────────────────────────────────────────────────────────
-    ("Blocker: No Money",         "blocker_no",            "checkbox"),
-    ("Blocker: Unsure",           "blocker_unsure",        "checkbox"),
-    ("Blocker: Key Concern",      "blocker_key",           "checkbox"),
-    ("Blocker: Date Uncertainty", "blocker_date",          "checkbox"),
-    ("Blocker: Already Planned",  "blocker_already",       "checkbox"),
-    ("Blocker: Other",            "blocker_other",         "text"),
-
-    # ── G5 Current Trip ────────────────────────────────────────────────────────
-    ("Destination (Primary)",     "destination_primary",   "text"),
-    ("Destination (Alternative)", "destination_alternative","text"),
-    ("Trip Timeline",             "trip_timeline",         "text"),
-    ("Trip Type",                 "trip_type",             "text"),
-    ("Booking Details",           "booking_details",       "text"),
-    ("Calendly Link",             "calendly_link",         "text"),
-
-    # ── G6 Milestones ──────────────────────────────────────────────────────────
-    ("M1: Flights Booked",        "m1_flights",            "checkbox"),
-    ("M2: Accommodation Booked",  "m2_accommodation",      "checkbox"),
-    ("M3: Food Budget Set",       "m3_food",               "checkbox"),
-    ("M4: Activities Planned",    "m4_activities",         "checkbox"),
-    ("M5: Transport Sorted",      "m5_transport",          "checkbox"),
-    ("Miscellaneous Notes",       "miscellaneous",         "text"),
-    ("Trigger Moment",            "trigger_moment",        "text"),
-    ("Confidence Score",          "confidence_score",      "number"),
-    ("Success Visibility",        "success_visibility",    "text"),
-
-    # ── G7 JTBD ────────────────────────────────────────────────────────────────
-    ("Value Points (JTBD)",       "value_points",          "text"),
-    ("Pain Points",               "pain_points",           "text"),
-
-    # ── G8 Engagement ──────────────────────────────────────────────────────────
-    ("Paid?",                     "paid",                  "checkbox"),
-    ("Amount Paid",               "amount",                "number"),
-    ("Payment Date",              "payment_date",          "text"),
-    ("Hot / Cold",                "hot_cold",              "text"),
-    ("Journey Stage",             "journey_stage",         "text"),
-    ("Persona",                   "persona",               "text"),
-    ("Last Contact",              "last_contact",          "text"),
-    ("No. of Conversations",      "conversations",         "number"),
-    ("Next Action",               "next_action",           "text"),
-    ("Action Owner",              "action_owner",          "text"),
-    ("Feedback Quote",            "feedback_quote",        "text"),
-    ("Key Quotes",                "key_quotes",            "text"),
-    ("Link to Conversations",     "link_to_conversations", "text"),
-
-    # ── G9 Actions & Intelligence ──────────────────────────────────────────────
-    ("AI Recommendation",         "ai_recommendation",     "text"),
-    ("Follow-Up Priority",        "follow_up_priority",    "text"),
-    ("Sentiment Score",           "sentiment_score",       "number"),
-    ("Objection Type",            "objection_type",        "text"),
-    ("Predicted Conversion",      "predicted_timeline",    "text"),
+    # title                     api_slug              type
+    ("Source City",             "source_city",        "text"),
+    ("Time to Travel",          "trip_timeline",      "text"),
+    ("Budget Range",            "trip_budget",        "text"),
+    ("Blockers / Pain Point",   "pain_points",        "text"),
+    ("JTBD",                    "value_points",       "text"),
+    ("Journey Stage",           "journey_stage",      "text"),
 ]
 
 created = skipped = failed = 0
@@ -133,7 +68,7 @@ for title, slug, ftype in FIELDS:
             failed += 1
             print(f"   ✗  {title} — HTTP {e.code}: {body[:200]}")
 
-    time.sleep(0.15)  # stay well under Attio rate limit
+    time.sleep(0.15)
 
 print("")
 print(f"━━━ Done: {created} created  {skipped} skipped  {failed} failed ━━━")
