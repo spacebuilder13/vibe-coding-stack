@@ -1,0 +1,360 @@
+{
+  "name": "CRM Sync from Transcripts v3",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "aa000001-0001-0001-0001-000000000001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "'1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY' in parents and mimeType = 'application/vnd.google-apps.document'",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "id": "aa000002-0002-0002-0002-000000000002",
+      "name": "Search Google Docs",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [220, 0],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ywlAvR4Edjv5N0Aj",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "filter-valid-id",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "aa000003-0003-0003-0003-000000000003",
+      "name": "Filter Valid Docs",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "aa000004-0004-0004-0004-000000000004",
+      "name": "Loop Docs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "aa000005-0005-0005-0005-000000000005",
+      "name": "Download as Plain Text",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [880, 120],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ywlAvR4Edjv5N0Aj",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const binaryData = $binary?.data;\nlet transcript = '';\nif (binaryData?.data) {\n  transcript = Buffer.from(binaryData.data, 'base64').toString('utf-8').substring(0, 6000);\n}\n\nconst systemPrompt = [\n  'You are processing call transcripts and WhatsApp exports for WHEN Travel, a travel savings coaching platform based in India.',\n  'Extract structured CRM data and return ONLY a valid JSON object — no preamble, no markdown, no code fences.',\n  '',\n  'Extract these fields (use null for anything not mentioned or not clear):',\n  '',\n  '{',\n  '  \"name\": \"client first name only\",',\n  '  \"email\": \"email address if mentioned or null\",',\n  '  \"phone\": \"phone number if mentioned or null\",',\n  '  \"source\": \"how they found WHEN Travel e.g. referral/instagram/whatsapp/other or null\",',\n  '',\n  '  \"pref_beach\": true or false or null,',\n  '  \"pref_mountain\": true or false or null,',\n  '  \"pref_culture\": true or false or null,',\n  '  \"pref_unique\": true or false or null (off-beat / unusual destinations),',\n  '  \"pref_city\": true or false or null,',\n  '  \"travel_style\": \"budget or mid-range or luxury or null\",',\n  '  \"trip_budget\": \"total trip budget as string e.g. 1.5L or 80000 or null\",',\n  '',\n  '  \"monthly_savings\": number in INR or null,',\n  '  \"already_saving\": true or false or null,',\n  '  \"existing_savings\": \"description of current savings e.g. 20k in FD or null\",',\n  '  \"savings_instruments\": \"PPF FD mutual funds etc or null\",',\n  '  \"cards_owned\": \"credit card names if mentioned or null\",',\n  '',\n  '  \"blocker_no\": true or false (says they have no money),',\n  '  \"blocker_unsure\": true or false (unsure about whether to travel),',\n  '  \"blocker_key\": true or false (some specific key concern blocks them),',\n  '  \"blocker_date\": true or false (uncertain about travel dates),',\n  '  \"blocker_already\": true or false (already have conflicting plans),',\n  '  \"blocker_other\": \"describe any other blocker or null\",',\n  '',\n  '  \"destination_primary\": \"main destination they want or null\",',\n  '  \"destination_alternative\": \"backup or second-choice destination or null\",',\n  '  \"trip_timeline\": \"when they want to travel e.g. March 2026 or in 6 months or null\",',\n  '  \"trip_type\": \"solo or couple or family or group or null\",',\n  '  \"booking_details\": \"any flights or hotels already booked or null\",',\n  '  \"calendly_link\": \"link if shared or null\",',\n  '',\n  '  \"m1_flights\": true or false or null (flights booked),',\n  '  \"m2_accommodation\": true or false or null (accommodation booked),',\n  '  \"m3_food\": true or false or null (food budget sorted),',\n  '  \"m4_activities\": true or false or null (activities planned),',\n  '  \"m5_transport\": true or false or null (local transport arranged),',\n  '  \"trigger_moment\": \"the emotional catalyst that made them want this trip or null\",',\n  '  \"confidence_score\": number 1-10 how confident they seem about actually doing the trip,',\n  '  \"success_visibility\": \"how they imagine the trip feeling or null\",',\n  '',\n  '  \"value_points\": \"transformation or value they want from travel or null\",',\n  '  \"pain_points\": \"their main financial or emotional struggles or null\",',\n  '',\n  '  \"hot_cold\": \"hot or warm or cold — how ready they are to take action\",',\n  '  \"journey_stage\": \"Discovery Done or Plan Delivered or Active Saver or Milestone Unlocked or Trip Completed\",',\n  '  \"persona\": \"one-word archetype: Dreamer Planner Hustler Worrier or Explorer\",',\n  '  \"next_action\": \"recommended next step for the coach or null\",',\n  '  \"feedback_quote\": \"a positive or reflective quote from them or null\",',\n  '  \"key_quotes\": \"most impactful 1-2 things they said or null\",',\n  '',\n  '  \"ai_recommendation\": \"brief 1-sentence coaching recommendation based on their profile\",',\n  '  \"follow_up_priority\": \"high or medium or low\",',\n  '  \"sentiment_score\": number 1-10 overall positivity and readiness,',\n  '  \"objection_type\": \"financial or timing or uncertainty or family or other or null\",',\n  '  \"predicted_timeline\": \"when they are likely to book e.g. within 1 month or next quarter or null\"',\n  '}',\n  '',\n  'Journey stage rules:',\n  '- Discovery Done: first intake/discovery call, no plan delivered yet',\n  '- Plan Delivered: coach has sent or mentioned sending a savings plan',\n  '- Active Saver: client is actively tracking their savings progress',\n  '- Milestone Unlocked: client has booked flights or accommodation',\n  '- Trip Completed: trip has already happened'\n].join('\\n');\n\nconst requestBody = JSON.stringify({\n  model: 'claude-haiku-4-5-20251001',\n  max_tokens: 2048,\n  system: systemPrompt,\n  messages: [{ role: 'user', content: transcript || 'No transcript content available.' }]\n});\n\nreturn { json: { requestBody, filename: $('Loop Docs').item.json.name } };"
+      },
+      "id": "aa000006-0006-0006-0006-000000000006",
+      "name": "Build Claude Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "ANTHROPIC_API_KEY_PLACEHOLDER" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.requestBody }}",
+        "options": {}
+      },
+      "id": "aa000007-0007-0007-0007-000000000007",
+      "name": "Call Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1320, 120],
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "const responseText = $input.item.json.content[0].text;\nconst cleaned = responseText\n  .replace(/```json\\n?/g, '')\n  .replace(/```\\n?/g, '')\n  .trim();\n\nconst defaults = {\n  name: null, email: null, phone: null, source: null,\n  pref_beach: null, pref_mountain: null, pref_culture: null,\n  pref_unique: null, pref_city: null,\n  travel_style: null, trip_budget: null,\n  monthly_savings: null, already_saving: null,\n  existing_savings: null, savings_instruments: null, cards_owned: null,\n  blocker_no: null, blocker_unsure: null, blocker_key: null,\n  blocker_date: null, blocker_already: null, blocker_other: null,\n  destination_primary: null, destination_alternative: null,\n  trip_timeline: null, trip_type: null, booking_details: null, calendly_link: null,\n  m1_flights: null, m2_accommodation: null, m3_food: null,\n  m4_activities: null, m5_transport: null,\n  trigger_moment: null, confidence_score: null, success_visibility: null,\n  value_points: null, pain_points: null,\n  hot_cold: null, journey_stage: null, persona: null,\n  next_action: null, feedback_quote: null, key_quotes: null,\n  ai_recommendation: null, follow_up_priority: null,\n  sentiment_score: null, objection_type: null, predicted_timeline: null\n};\n\ntry {\n  const extracted = JSON.parse(cleaned);\n  return { json: { ...defaults, ...extracted } };\n} catch (e) {\n  return { json: defaults };\n}"
+      },
+      "id": "aa000008-0008-0008-0008-000000000008",
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/objects/people/records/query",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={ \"limit\": 500 }",
+        "options": {}
+      },
+      "id": "aa000009-0009-0009-0009-000000000009",
+      "name": "Fetch All People",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1760, 120],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $('Parse Response').item.json;\nconst allRecords = $('Fetch All People').item.json.data || [];\nconst filename = $('Loop Docs').item.json.name || '';\n\n// Fall back to filename-derived name if Claude couldn't find one\nconst fallbackName = filename.split('_Session')[0].replace(/_/g, ' ').trim();\nconst personName = (d.name && d.name.trim()) ? d.name.trim() : fallbackName;\n\n// Helper builders — return undefined (excluded by JSON.stringify) when value is null\nfunction txt(v) {\n  return (v !== null && v !== undefined && String(v).trim() !== '')\n    ? [{ value: String(v).trim() }]\n    : undefined;\n}\nfunction num(v) {\n  const n = Number(v);\n  return (v !== null && v !== undefined && !isNaN(n)) ? [{ value: n }] : undefined;\n}\nfunction chk(v) {\n  return (v !== null && v !== undefined) ? [{ value: Boolean(v) }] : undefined;\n}\n\nfunction buildValues() {\n  const v = {};\n  if (personName) v.name = [{ first_name: personName, last_name: '', full_name: personName }];\n\n  // G1 Identity\n  const source = txt(d.source); if (source) v.source = source;\n\n  // G2 Travel Preferences\n  const pref_beach = chk(d.pref_beach); if (pref_beach !== undefined) v.pref_beach = pref_beach;\n  const pref_mountain = chk(d.pref_mountain); if (pref_mountain !== undefined) v.pref_mountain = pref_mountain;\n  const pref_culture = chk(d.pref_culture); if (pref_culture !== undefined) v.pref_culture = pref_culture;\n  const pref_unique = chk(d.pref_unique); if (pref_unique !== undefined) v.pref_unique = pref_unique;\n  const pref_city = chk(d.pref_city); if (pref_city !== undefined) v.pref_city = pref_city;\n  const travel_style = txt(d.travel_style); if (travel_style) v.travel_style = travel_style;\n  const trip_budget = txt(d.trip_budget); if (trip_budget) v.trip_budget = trip_budget;\n\n  // G3 Financial\n  const monthly_savings = num(d.monthly_savings); if (monthly_savings) v.monthly_savings = monthly_savings;\n  const already_saving = chk(d.already_saving); if (already_saving !== undefined) v.already_saving = already_saving;\n  const existing_savings = txt(d.existing_savings); if (existing_savings) v.existing_savings = existing_savings;\n  const savings_instruments = txt(d.savings_instruments); if (savings_instruments) v.savings_instruments = savings_instruments;\n  const cards_owned = txt(d.cards_owned); if (cards_owned) v.cards_owned = cards_owned;\n\n  // G4 Blockers\n  const blocker_no = chk(d.blocker_no); if (blocker_no !== undefined) v.blocker_no = blocker_no;\n  const blocker_unsure = chk(d.blocker_unsure); if (blocker_unsure !== undefined) v.blocker_unsure = blocker_unsure;\n  const blocker_key = chk(d.blocker_key); if (blocker_key !== undefined) v.blocker_key = blocker_key;\n  const blocker_date = chk(d.blocker_date); if (blocker_date !== undefined) v.blocker_date = blocker_date;\n  const blocker_already = chk(d.blocker_already); if (blocker_already !== undefined) v.blocker_already = blocker_already;\n  const blocker_other = txt(d.blocker_other); if (blocker_other) v.blocker_other = blocker_other;\n\n  // G5 Current Trip\n  const destination_primary = txt(d.destination_primary); if (destination_primary) v.destination_primary = destination_primary;\n  const destination_alternative = txt(d.destination_alternative); if (destination_alternative) v.destination_alternative = destination_alternative;\n  const trip_timeline = txt(d.trip_timeline); if (trip_timeline) v.trip_timeline = trip_timeline;\n  const trip_type = txt(d.trip_type); if (trip_type) v.trip_type = trip_type;\n  const booking_details = txt(d.booking_details); if (booking_details) v.booking_details = booking_details;\n  const calendly_link = txt(d.calendly_link); if (calendly_link) v.calendly_link = calendly_link;\n\n  // G6 Milestones\n  const m1_flights = chk(d.m1_flights); if (m1_flights !== undefined) v.m1_flights = m1_flights;\n  const m2_accommodation = chk(d.m2_accommodation); if (m2_accommodation !== undefined) v.m2_accommodation = m2_accommodation;\n  const m3_food = chk(d.m3_food); if (m3_food !== undefined) v.m3_food = m3_food;\n  const m4_activities = chk(d.m4_activities); if (m4_activities !== undefined) v.m4_activities = m4_activities;\n  const m5_transport = chk(d.m5_transport); if (m5_transport !== undefined) v.m5_transport = m5_transport;\n  const trigger_moment = txt(d.trigger_moment); if (trigger_moment) v.trigger_moment = trigger_moment;\n  const confidence_score = num(d.confidence_score); if (confidence_score) v.confidence_score = confidence_score;\n  const success_visibility = txt(d.success_visibility); if (success_visibility) v.success_visibility = success_visibility;\n\n  // G7 JTBD\n  const value_points = txt(d.value_points); if (value_points) v.value_points = value_points;\n  const pain_points = txt(d.pain_points); if (pain_points) v.pain_points = pain_points;\n\n  // G8 Engagement\n  const paid = chk(d.paid); if (paid !== undefined) v.paid = paid;\n  const amount = num(d.amount); if (amount) v.amount = amount;\n  const payment_date = txt(d.payment_date); if (payment_date) v.payment_date = payment_date;\n  const hot_cold = txt(d.hot_cold); if (hot_cold) v.hot_cold = hot_cold;\n  const journey_stage = txt(d.journey_stage); if (journey_stage) v.journey_stage = journey_stage;\n  const persona = txt(d.persona); if (persona) v.persona = persona;\n  const next_action = txt(d.next_action); if (next_action) v.next_action = next_action;\n  const feedback_quote = txt(d.feedback_quote); if (feedback_quote) v.feedback_quote = feedback_quote;\n  const key_quotes = txt(d.key_quotes); if (key_quotes) v.key_quotes = key_quotes;\n\n  // G9 Actions & Intelligence\n  const ai_recommendation = txt(d.ai_recommendation); if (ai_recommendation) v.ai_recommendation = ai_recommendation;\n  const follow_up_priority = txt(d.follow_up_priority); if (follow_up_priority) v.follow_up_priority = follow_up_priority;\n  const sentiment_score = num(d.sentiment_score); if (sentiment_score) v.sentiment_score = sentiment_score;\n  const objection_type = txt(d.objection_type); if (objection_type) v.objection_type = objection_type;\n  const predicted_timeline = txt(d.predicted_timeline); if (predicted_timeline) v.predicted_timeline = predicted_timeline;\n\n  return v;\n}\n\nconst existing = allRecords.find(r => {\n  const nameArr = r.values && r.values.name;\n  if (!nameArr || !nameArr[0]) return false;\n  return (nameArr[0].full_name || '').toLowerCase() === (personName || '').toLowerCase();\n});\n\nconst values = buildValues();\n\nif (!existing) {\n  return {\n    json: {\n      isNew: 'true',\n      body: JSON.stringify({ data: { values } })\n    }\n  };\n}\n\nreturn {\n  json: {\n    isNew: 'false',\n    recordId: existing.id.record_id,\n    body: JSON.stringify({ data: { values } })\n  }\n};"
+      },
+      "id": "aa000010-0010-0010-0010-000000000010",
+      "name": "Match and Decide",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1980, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-is-new",
+              "leftValue": "={{ $json.isNew }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "aa000011-0011-0011-0011-000000000011",
+      "name": "New or Existing?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [2200, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/objects/people/records",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "aa000012-0012-0012-0012-000000000012",
+      "name": "Create Person",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2420, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/lists/4bd161bd-2b58-4c11-9ee5-004257444bb2/entries",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"data\": {\n    \"parent_record_id\": \"{{ $json.data.id.record_id }}\",\n    \"parent_object\": \"people\",\n    \"entry_values\": {}\n  }\n}",
+        "options": {}
+      },
+      "id": "aa000013-0013-0013-0013-000000000013",
+      "name": "Add to List",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2640, -120]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ \"https://api.attio.com/v2/objects/people/records/\" + $json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "aa000014-0014-0014-0014-000000000014",
+      "name": "Update Person",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2420, 120]
+    },
+    {
+      "parameters": {
+        "content": "## CRM Sync from Transcripts v3\n\nReads all Google Docs in the transcripts folder, extracts CRM fields via Claude Haiku (55 fields across G1–G9), then creates or updates records in Attio.\n\n**Google Drive folder:** 1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY\n**Attio list:** 4bd161bd-2b58-4c11-9ee5-004257444bb2\n\n**Before deploying:** Run tools/attio-setup/create-fields.sh to create the custom fields in Attio.\n\n**Groups:** G1 Identity · G2 Travel Prefs · G3 Financial · G4 Blockers · G5 Current Trip · G6 Milestones · G7 JTBD · G8 Engagement · G9 Actions & Intelligence",
+        "height": 200,
+        "width": 500,
+        "color": 3
+      },
+      "id": "aa000015-0015-0015-0015-000000000015",
+      "name": "README",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -320]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Search Google Docs", "type": "main", "index": 0 }]]
+    },
+    "Search Google Docs": {
+      "main": [[{ "node": "Filter Valid Docs", "type": "main", "index": 0 }]]
+    },
+    "Filter Valid Docs": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    },
+    "Loop Docs": {
+      "main": [
+        [],
+        [{ "node": "Download as Plain Text", "type": "main", "index": 0 }]
+      ]
+    },
+    "Download as Plain Text": {
+      "main": [[{ "node": "Build Claude Request", "type": "main", "index": 0 }]]
+    },
+    "Build Claude Request": {
+      "main": [[{ "node": "Call Claude", "type": "main", "index": 0 }]]
+    },
+    "Call Claude": {
+      "main": [[{ "node": "Parse Response", "type": "main", "index": 0 }]]
+    },
+    "Parse Response": {
+      "main": [[{ "node": "Fetch All People", "type": "main", "index": 0 }]]
+    },
+    "Fetch All People": {
+      "main": [[{ "node": "Match and Decide", "type": "main", "index": 0 }]]
+    },
+    "Match and Decide": {
+      "main": [[{ "node": "New or Existing?", "type": "main", "index": 0 }]]
+    },
+    "New or Existing?": {
+      "main": [
+        [{ "node": "Create Person", "type": "main", "index": 0 }],
+        [{ "node": "Update Person", "type": "main", "index": 0 }]
+      ]
+    },
+    "Create Person": {
+      "main": [[{ "node": "Add to List", "type": "main", "index": 0 }]]
+    },
+    "Add to List": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    },
+    "Update Person": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ad826709951b1d77e0bc55cdca05f4aac3d499bd6387bcef2412a9cdb171c483"
+  },
+  "tags": []
+}
