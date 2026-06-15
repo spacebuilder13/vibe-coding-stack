@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Abhishek Shankhdhar",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "October or November (end of year)",
+    "budget_range": "2L",
+    "blockers_pain_point": "Fear of not taking trips; needs structured savings plan to make travel happen",
+    "jtbd": "Take a trip within 12 months by building disciplined savings through equity funds",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Akanksha Goyal",
+    "phone": null,
+    "source_city": "Bangalore",
+    "time_to_travel": "4 months from now (around April 2026)",
+    "budget_range": "3-5L",
+    "blockers_pain_point": "No prior experience financing own trips; wants financial accountability; balancing honeymoon aspirations with budget constraints",
+    "jtbd": "Plan and finance a stress-free, guilt-free, debt-free honeymoon trip (India or international - Africa/tropical Asia preferred) while building sustainable travel savings habits",
+    "journey_stage": "Discovery Done"
+  },
+  {
+    "name": "Azharul Haque",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "April 2025",
+    "budget_range": null,
+    "blockers_pain_point": "Travel often takes a backseat when saving for multiple goals; Switzerland budget feels far-fetched",
+    "jtbd": "Family trip to Switzerland for an anniversary; willing to optimize or choose alternative European destination",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Baani Bhatia",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "late April or early May 2025",
+    "budget_range": "80000",
+    "blockers_pain_point": "Building motivation to save consistently rather than using existing UK reserves; indecision between Bali and Malaysia destinations; concerned about flight booking timing and costs",
+    "jtbd": "Take a meaningful trip to Malaysia (priority) with potential Bali extension, while building disciplined savings habits and establishing credit history through travel rewards",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Deepak Patidar",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "August 2026 (after 6 months of saving)",
+    "budget_range": "1.5L - 2L",
+    "blockers_pain_point": "Recently had a baby, no passports ready yet, concerned about inflation eroding savings in bank accounts",
+    "jtbd": "Take family trip to Dubai with wife and new baby; bridge into international travel; long-term wealth generation for child's future",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Paarth Sharma",
+    "phone": "paarthsharma096@gmail.com",
+    "source_city": null,
+    "time_to_travel": "Jan 2026 onwards (Croatia/Germany/Philippines/Thailand being planned)",
+    "budget_range": "1-1.5L per trip",
+    "blockers_pain_point": "Budget constraints for European travel (1.8L for Croatia vs preferred 1-1.5L); need to balance multiple destination interests within financial limits",
+    "jtbd": "Experience diverse travel destinations (Europe, Southeast Asia) with adventurous activities; explore new places with fewer Indian tourists; balance luxury aspirations with budget reality",
+    "journey_stage": "Active Saver"
+  },
+  {
+    "name": "Rakesh Rathod",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "Late May to early June 2026",
+    "budget_range": "3 to 3.2L",
+    "blockers_pain_point": "Limited international travel history; needs passport stamps for future US/Canada visa applications; balancing family constraints (traveling with parents) and dietary restrictions (pure vegetarian/Jain)",
+    "jtbd": "Gain broader worldview and life perspective through international travel; create family bonding experiences while respecting dietary and health needs of elderly parents",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Sarthak Dev",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "before December 2025 (within 2 months)",
+    "budget_range": "70000-75000",
+    "blockers_pain_point": "None immediate - has FNF payment; seeking meaningful travel experience before MBA",
+    "jtbd": "Peaceful, relaxing mountain/beach trip to meet new people and recharge before starting MBA",
+    "journey_stage": "Discovery Done"
+  },
+  {
+    "name": "Shruthi Subramanian",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "May 2026",
+    "budget_range": "90000",
+    "blockers_pain_point": "Unexpected costs on past trips, tight timeline before master's degree abroad, need to balance travel with job busy period (Sept-Jan)",
+    "jtbd": "Solo international trip with quiet, private accommodation and vegetarian food options; covering multiple regions within budget while securing best flight prices",
+    "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Shweta Gupta",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "September to October 2026 (Japan)",
+    "budget_range": null,
+    "blockers_pain_point": "Last-minute travel planning stress, difficulty coordinating timing with partner's interests, need for comprehensive budget planning for international trips",
+    "jtbd": "Plan a meaningful Japan trip focused on unique architecture, technology, and minimalism; reduce travel planning stress through early financial and travel planning",
+    "journey_stage": "Discovery Done"
+  },
+  {
+    "name": "Surej Salim",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "next month (Unati's wedding)",
+    "budget_range": null,
+    "blockers_pain_point": "Home EMI starting next month (significant fixed expense jump to 2.7-2.8L), need to increase income rather than cut lifestyle spending further",
+    "jtbd": "Manage increased fixed expenses through income growth while maintaining fiscal discipline and lifestyle quality; optimize credit card utilization and expense tracking",
+    "journey_stage": "Active Saver"
+  },
+  {
+    "name": "Urvashi Matta",
+    "phone": null,
+    "source_city": "Gurgaon",
+    "time_to_travel": "October to December 2026 (primary), with potential Asia/South Asia trip before January 2026",
+    "budget_range": "1.8L to 2L for two people (9 months savings at 20k-25k/month)",
+    "blockers_pain_point": "Job uncertainty and potential job change requiring repayment to current employer; travel anxiety related to long car/plane travel; single primary income stream; past experience losing money on non-refundable bookings",
+    "jtbd": "Enable guilt-free, debt-free travel as a lifestyle with financial accountability and risk mitigation through refundable bookings; achieve longer trips to dream destinations (Philippines, Scandinavia, Spain, Italy) with comfort travel (boutique hotels)",
+    "journey_stage": "Plan Delivered"
+  }
+]
