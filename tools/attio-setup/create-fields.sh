@@ -24,13 +24,18 @@ token, base_url = sys.argv[1], sys.argv[2]
 # Standard Attio People fields (name, email_addresses, phone_numbers) are skipped —
 # they already exist. We only create custom fields.
 FIELDS = [
-    # title                     api_slug              type
-    ("Source City",             "source_city",        "text"),
-    ("Time to Travel",          "trip_timeline",      "text"),
-    ("Budget Range",            "trip_budget",        "text"),
-    ("Blockers / Pain Point",   "pain_points",        "text"),
-    ("JTBD",                    "value_points",       "text"),
-    ("Journey Stage",           "journey_stage",      "text"),
+    # title                         api_slug              type
+    # ── v1 fields ──────────────────────────────────────────────────────────────
+    ("Source City",                 "source_city",        "text"),
+    ("Time to Travel",              "trip_timeline",      "text"),
+    ("Budget Range",                "trip_budget",        "text"),
+    ("JTBD (Functional)",           "value_points",       "text"),
+    ("Blockers / Pain Point",       "pain_points",        "text"),
+    ("Journey Stage",               "journey_stage",      "text"),
+    # ── v2 fields (richer qualitative extraction) ───────────────────────────────
+    ("JTBD (Emotional)",            "jtbd_emotional",     "text"),
+    ("Blocker Type",                "blocker_type",       "text"),
+    ("Memorable Quote",             "memorable_quote",    "text"),
 ]
 
 created = skipped = failed = 0

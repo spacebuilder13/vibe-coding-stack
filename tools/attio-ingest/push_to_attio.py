@@ -110,12 +110,17 @@ def build_values(d):
         }]
 
     for slug, val in [
-        ("source_city",   d.get("source_city")),
-        ("trip_timeline", d.get("time_to_travel")),
-        ("trip_budget",   d.get("budget_range")),
-        ("pain_points",   d.get("blockers_pain_point")),
-        ("value_points",  d.get("jtbd")),
-        ("journey_stage", d.get("journey_stage")),
+        ("source_city",     d.get("source_city")),
+        ("trip_timeline",   d.get("time_to_travel")),
+        ("trip_budget",     d.get("budget_range")),
+        # v1 fields (kept for backwards compat if present)
+        ("pain_points",     d.get("blockers_pain_point") or d.get("blocker_description")),
+        ("value_points",    d.get("jtbd") or d.get("jtbd_functional")),
+        ("journey_stage",   d.get("journey_stage")),
+        # v2 fields (richer extraction)
+        ("jtbd_emotional",  d.get("jtbd_emotional")),
+        ("blocker_type",    d.get("blocker_type")),
+        ("memorable_quote", d.get("memorable_quote")),
     ]:
         t = txt(val)
         if t:
