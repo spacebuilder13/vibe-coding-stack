@@ -85,8 +85,8 @@
     "source_city": null,
     "time_to_travel": "May 2026",
     "budget_range": "90000",
-    "blockers_pain_point": "Unexpected costs on past trips, tight timeline before master's degree abroad, need to balance travel with job busy period (Sept-Jan)",
-    "jtbd": "Solo international trip with quiet, private accommodation and vegetarian food options; covering multiple regions within budget while securing best flight prices",
+    "blockers_pain_point": "Solo female traveler seeking safety and budget optimization; wants to maximize destinations within fixed budget",
+    "jtbd": "Take a guilt-free, stress-free solo trip in May with quiet private accommodation, vegetarian food options, and nature/introspection focus",
     "journey_stage": "Plan Delivered"
   },
   {
@@ -118,5 +118,25 @@
     "blockers_pain_point": "Job uncertainty and potential job change requiring repayment to current employer; travel anxiety related to long car/plane travel; single primary income stream; past experience losing money on non-refundable bookings",
     "jtbd": "Enable guilt-free, debt-free travel as a lifestyle with financial accountability and risk mitigation through refundable bookings; achieve longer trips to dream destinations (Philippines, Scandinavia, Spain, Italy) with comfort travel (boutique hotels)",
     "journey_stage": "Plan Delivered"
+  },
+  {
+    "name": "Sushant Jaiswal",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "September 2026",
+    "budget_range": "75000 to 120000",
+    "blockers_pain_point": "Need time off for leisure/rest; wants to explore food establishments from entrepreneurial perspective",
+    "jtbd": "Take a 2-3 day leisure trip to Bangkok, Thailand to explore food businesses and relax; optimize costs through off-season travel",
+    "journey_stage": "Active Saver"
+  },
+  {
+    "name": "Tanya Meshram",
+    "phone": null,
+    "source_city": null,
+    "time_to_travel": "November 2026 (parents' Sri Lanka trip); personal trip timing not yet confirmed",
+    "budget_range": "1,11,000 (parents' trip); 85,000-90,000 (personal trip)",
+    "blockers_pain_point": "Financial anxiety around money management; needs structured saving plan to afford travel while maintaining emergency fund and investments",
+    "jtbd": "Enable parents' dream trip (honeymoon 2.0) to Sri Lanka; fund personal travel; improve relationship with money through disciplined savings",
+    "journey_stage": "Active Saver"
   }
 ]
