@@ -18,6 +18,7 @@ Auth: Google login via Supabase.
 | OSF Phase 1 — Pod | https://zms-osf-phase-1.vercel.app | Insurance cases gallery + harness field guide for Utsav + Pooja. `/learn` `/cases`. | 2026-06-15 |
 | OSF Client Deck | https://findow-phase-1.vercel.app | Password-gated Phase 1 narrative deck for client. External repo. | 2026-06-15 |
 | Max Spare — AI Discovery Hub | https://project-max-spare.vercel.app | Zen discovery hub for Asia's largest seal manufacturer. 10 opportunity modules + live chat. Passphrase-gated; all data illustrative. | 2026-05-31 |
+| Project Royale | — (harness only; deploy pending BUILD.md) | Production management for rotogravure printing + pouch packaging. Stage unlock, RMC, WhatsApp alerts. Private repo. | 2026-06-17 |
 
 ---
 
