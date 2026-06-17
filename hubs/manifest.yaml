@@ -54,6 +54,7 @@ hubs:
     design_system: zen-sandy
     stack: react-vite-ts-tailwind-supabase
     deployment: vercel
+    url: https://project-royale.vercel.app
     notebooklm: https://notebooklm.google.com/notebook/c8f5da53-40a2-4b06-9ca7-869fa4822929
     created: 2026-06-17
     confidential: true
