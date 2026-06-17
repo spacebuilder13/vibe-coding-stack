@@ -1,0 +1,51 @@
+.s12 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s12__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.s12__cards {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-content: center;
+}
+
+.s12__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 24px;
+  border: 1px solid var(--color-sandy-line);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--color-sandy-surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px -8px rgba(27,26,23,0.1);
+}
+
+.s12__card-num {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--color-sandy-gold);
+}
+
+.s12__card-q {
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--color-sandy-ink);
+  white-space: pre-line;
+}
+
+@media (max-width: 900px) {
+  .s12__cards { grid-template-columns: 1fr; }
+}

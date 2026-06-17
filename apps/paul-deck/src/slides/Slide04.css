@@ -1,0 +1,88 @@
+/* Override grid lines to rose tint on Slide 4 */
+.s04 {
+  --grid-line:        rgba(196, 160, 160, 0.12);
+  --grid-line-strong: rgba(196, 160, 160, 0.2);
+  --color-sandy-bg:   var(--color-rose-wash, #fdf6f6);
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s04__pad {
+  align-items: flex-start;
+}
+
+.s04__stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 64px;
+}
+
+/* Orbit — pure CSS animation, no JS needed */
+.s04__orbit-wrap {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  flex-shrink: 0;
+  overflow: visible;
+  animation: orbit-appear 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.18s;
+}
+
+@keyframes orbit-appear {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.s04__orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-rose-soft, #e8d0d0);
+  animation: ring-breathe 3.6s ease-in-out infinite;
+}
+
+@keyframes ring-breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%       { transform: scale(1.02); opacity: 1; }
+}
+
+.s04__orbit-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-rose, #c4a0a0);
+  transform:
+    rotate(var(--angle))
+    translateY(-148px)
+    rotate(calc(-1 * var(--angle)))
+    translateX(-50%)
+    translateY(-50%);
+  white-space: nowrap;
+}
+
+.s04__center-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-rose, #c4a0a0);
+  transform: translate(-50%, -50%);
+}
+
+/* Thesis */
+.s04__thesis {
+  font-size: clamp(24px, 2.8vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-sandy-ink);
+  max-width: 20ch;
+}

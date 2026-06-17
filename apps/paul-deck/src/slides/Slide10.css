@@ -1,0 +1,23 @@
+.s10 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s10__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.35;
+}
+
+.s10__head {
+  margin-bottom: 32px;
+}
+
+.s10__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}

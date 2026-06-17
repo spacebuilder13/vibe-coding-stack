@@ -1,0 +1,127 @@
+:root {
+  /* Sandy warm-paper palette */
+  --color-sandy-bg:          #fbfaf6;
+  --color-sandy-surface:     #ffffff;
+  --color-sandy-elevated:    #f5f2ea;
+  --color-sandy-ink:         #1b1a17;
+  --color-sandy-ink-soft:    #4b4843;
+  --color-sandy-ink-faint:   #8a857c;
+  --color-sandy-line:        #e7e2d5;
+  --color-sandy-line-strong: #c9c2ae;
+  --color-sandy-gold:        #c4983a;
+  --color-sandy-gold-soft:   #e7cc85;
+  --color-sandy-gold-wash:   #faf1d8;
+  --color-sandy-tea:         #5c7c6e;
+
+  /* Rose — one-slide-only accent (Slide 4) */
+  --color-rose:              #c4a0a0;
+  --color-rose-soft:         #e8d0d0;
+  --color-rose-wash:         #fdf6f6;
+
+  /* Graph paper */
+  --grid-line:        rgba(27, 26, 23, 0.07);
+  --grid-line-strong: rgba(27, 26, 23, 0.13);
+  --grid-size:        28px;
+
+  /* Typography */
+  --font-display: 'DM Serif Display', 'Iowan Old Style', Georgia, serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --font-sans:    'Inter', system-ui, sans-serif;
+
+  /* Radii */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --deck-max: 1320px;
+
+  /* Motion — matching Sandy ontology */
+  --dur-instant:   80ms;
+  --dur-quick:     180ms;
+  --dur-calm:      420ms;
+  --dur-breath:    900ms;
+  --dur-cinematic: 1400ms;
+
+  --ease-arrive:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-calm:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-press:   cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-sandy-bg);
+  color: var(--color-sandy-ink);
+  line-height: 1.5;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+/* Utility classes */
+.serif { font-family: var(--font-display); }
+.mono  { font-family: var(--font-mono); }
+
+/* Global animation keyframes */
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(10px); transform: translateY(8px); }
+  to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+}
+
+@keyframes draw-path {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes grid-breathe {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* Extended stagger utility — fill-mode:both means backwards fill handles initial opacity:0 */
+.stagger > * {
+  animation: fade-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.stagger > *:nth-child(1)  { animation-delay: 0.05s; }
+.stagger > *:nth-child(2)  { animation-delay: 0.14s; }
+.stagger > *:nth-child(3)  { animation-delay: 0.23s; }
+.stagger > *:nth-child(4)  { animation-delay: 0.32s; }
+.stagger > *:nth-child(5)  { animation-delay: 0.41s; }
+.stagger > *:nth-child(6)  { animation-delay: 0.50s; }
+.stagger > *:nth-child(7)  { animation-delay: 0.59s; }
+.stagger > *:nth-child(8)  { animation-delay: 0.68s; }
+.stagger > *:nth-child(9)  { animation-delay: 0.77s; }
+.stagger > *:nth-child(10) { animation-delay: 0.86s; }
+.stagger > *:nth-child(11) { animation-delay: 0.95s; }
+.stagger > *:nth-child(12) { animation-delay: 1.04s; }

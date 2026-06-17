@@ -1,0 +1,40 @@
+.graph-paper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-sandy-bg);
+}
+
+.graph-paper-grid {
+  position: absolute;
+  inset: -2px;
+  background-image:
+    repeating-linear-gradient(var(--grid-line) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 100%);
+  background-size: var(--gp-size) var(--gp-size);
+}
+
+.graph-paper-grid--major {
+  background-image:
+    repeating-linear-gradient(var(--grid-line-strong) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(90deg, var(--grid-line-strong) 0 1px, transparent 1px 100%);
+  background-size: var(--gp-major) var(--gp-major);
+}
+
+.graph-paper--vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 42%,
+    transparent 0%,
+    transparent 55%,
+    color-mix(in oklab, var(--color-sandy-bg) 78%, transparent) 100%
+  );
+}
+
+/* Breathing variant for Slide 4 */
+.graph-paper--breathe .graph-paper-grid {
+  animation: grid-breathe 900ms ease-in-out infinite;
+}

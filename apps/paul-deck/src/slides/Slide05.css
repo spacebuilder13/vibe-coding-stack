@@ -1,0 +1,31 @@
+.s05 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s05__head {
+  margin-bottom: 32px;
+}
+
+.s05__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 72px;
+}
+
+.s05__right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.s05__caption {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--color-sandy-ink-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}

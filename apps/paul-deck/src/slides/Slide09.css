@@ -1,0 +1,83 @@
+.s09 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s09__head {
+  margin-bottom: 32px;
+}
+
+.s09__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+}
+
+/* Pipeline row */
+.s09__pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.s09__pipeline-item {
+  display: flex;
+  align-items: center;
+}
+
+.s09__pipeline-node {
+  padding: 10px 14px;
+  border: 1px solid var(--color-sandy-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-sandy-surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  color: var(--color-sandy-ink-soft);
+  white-space: nowrap;
+}
+
+.s09__pipe-arrow {
+  width: 24px;
+  height: 14px;
+  color: var(--color-sandy-line-strong);
+  flex-shrink: 0;
+}
+
+/* Product tiles */
+.s09__tiles {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.s09__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-sandy-line);
+  border-radius: var(--radius-md);
+  background: var(--color-sandy-elevated);
+  flex: 1;
+  min-width: 160px;
+}
+
+.s09__tile-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-sandy-ink-soft);
+}
+
+.s09__tile-tag {
+  font-size: 9px;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+  color: var(--color-sandy-ink-faint);
+}

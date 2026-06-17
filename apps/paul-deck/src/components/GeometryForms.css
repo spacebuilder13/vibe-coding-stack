@@ -1,0 +1,42 @@
+.geo-forms {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: nowrap;
+}
+
+.geo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.geo-form__svg {
+  width: 100%;
+  max-width: 100px;
+  aspect-ratio: 1;
+  color: var(--color-sandy-ink-soft);
+}
+
+.geo-form__svg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.geo-form__label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-sandy-ink);
+  text-align: center;
+}
+
+.geo-form__tradition {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-sandy-ink-faint);
+  text-align: center;
+}

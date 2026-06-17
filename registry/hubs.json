@@ -35,16 +35,13 @@
       "notebooklm_urls": [
         "https://notebooklm.google.com/notebook/64f336ac-cbcb-4345-ba33-e01365a510cf"
       ],
-      "design_system": "zen-sandy",
-      "stack": "react-vite-ts-tailwind",
-      "deployment": "vercel",
-      "url": "https://zms-osf-phase-1.vercel.app",
-      "url_workshop": "https://project-om-shanti.vercel.app",
-      "url_client": "https://findow-phase-1.vercel.app",
       "engagement_phase": "Phase1-decks",
       "client_poc": "Ishika",
-      "last_verified": "2026-06-15",
-      "notes": "2 repos, 3 Vercel windows. Pod: /learn /cases. Client deck: findow-phase-1 repo. DSS router + harness field guide."
+      "url": "https://zms-osf-phase-1.vercel.app",
+      "url_workshop": "https://project-om-shanti.vercel.app",
+      "url_client": "https://findow-phase1.vercel.app",
+      "last_verified": "2026-06-17",
+      "notes": "Pod: apps/phase1. Client deck: apps/findow-phase1. paul-deck archived in vibe-coding-stack/apps/paul-deck."
     },
     {
       "id": "max-spare-discovery",

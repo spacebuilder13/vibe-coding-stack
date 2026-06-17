@@ -71,9 +71,9 @@ hubs:
     deployment: vercel
     url: https://zms-osf-phase-1.vercel.app
     url_workshop: https://project-om-shanti.vercel.app
-    url_client: https://findow-phase-1.vercel.app
+    url_client: https://findow-phase1.vercel.app
     notebooklm: https://notebooklm.google.com/notebook/64f336ac-cbcb-4345-ba33-e01365a510cf
     created: 2026-05-24
     notes: >-
-      2 repos, 3 Vercel windows. Pod /learn /cases for Utsav+Pooja. Client deck in findow-phase-1.
+      Monorepo: apps/phase1 (pod), apps/findow-phase1 (client deck). paul-deck archived in vibe-coding-stack.
       DSS router, harness field guide, SOW Phase 1.

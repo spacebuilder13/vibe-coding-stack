@@ -1,0 +1,39 @@
+.s07 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.s07__head {
+  margin-bottom: 32px;
+}
+
+.s07__body {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 72px;
+}
+
+.s07__right {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+  min-width: 220px;
+  max-width: 280px;
+}
+
+.s07__note {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--color-sandy-ink-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+.s07__tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

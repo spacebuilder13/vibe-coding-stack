@@ -1,0 +1,73 @@
+/* Shared slide primitives */
+
+.slide-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--color-sandy-ink-faint);
+}
+
+.slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.slide-sub {
+  font-size: clamp(14px, 1.1vw, 17px);
+  color: var(--color-sandy-ink-soft);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+/* Tag / pill */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-sandy-line);
+  background: var(--color-sandy-elevated);
+  color: var(--color-sandy-ink-faint);
+}
+.tag--gold {
+  color: var(--color-sandy-gold);
+  border-color: color-mix(in oklab, var(--color-sandy-gold) 35%, var(--color-sandy-line));
+  background: var(--color-sandy-gold-wash);
+}
+.tag--tea {
+  color: var(--color-sandy-tea);
+  border-color: color-mix(in oklab, var(--color-sandy-tea) 30%, var(--color-sandy-line));
+}
+
+/* One-line thesis */
+.thesis {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-sandy-ink);
+}
+
+/* Mono metadata line below diagrams */
+.diagram-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-sandy-ink-faint);
+  letter-spacing: 0.06em;
+}
+
+/* blur-in helper class for thesis lines — fill-mode:both */
+.blur-in {
+  animation: blur-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.blur-in--delay-1 { animation-delay: 0.6s; }
+.blur-in--delay-2 { animation-delay: 1.0s; }
+.blur-in--delay-3 { animation-delay: 1.4s; }
+.blur-in--delay-4 { animation-delay: 1.8s; }

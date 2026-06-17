@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2 — 2026-06-17
+
+OSF deck housekeeping.
+
+- `apps/paul-deck/` — archived reference deck moved from `project-om-shanti`
+- `app-store/STORE.md` — OSF client deck URL → `findow-phase1.vercel.app`
+- `registry/hubs.json` + `hubs/manifest.yaml` — om-shanti client deck path + URLs
+
 ## 0.2.1 — 2026-06-15
 
 OSF harness learnings + repo/deploy mental model.
