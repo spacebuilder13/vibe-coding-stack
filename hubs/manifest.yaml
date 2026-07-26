@@ -62,6 +62,18 @@ hubs:
       Production management for Zenith Gandhi (rotogravure printing + pouch packaging).
       Sequential stage unlock, 5-6 role logins, RMC/costing admin-only, WhatsApp alerts ±10%.
       Phase 1: 10-job pilot. Competing with Ahmedabad ERP firm.
+  - id: blue-diamond-voyage
+    name: Blue Diamond Voyage × Spaceships & Atoms
+    repo: https://github.com/spacebuilder13/project-blue-diamond
+    local: /Users/jarvis/Documents/Builder/project-blue-diamond
+    stack: harness-only
+    deployment: none
+    notebooklm: https://notebooklm.google.com/notebook/35c841ef-9220-433a-a478-003cff1c4f85
+    created: 2026-07-26
+    confidential: true
+    notes: >-
+      AI Travel Curator Dashboard for travel agents. Workshop kitchen — harness bootstrap complete.
+      NLM multiquery done. Phase 0: knowledge + Cursor harness. No app yet.
   - id: om-shanti-finserv
     name: Om Shanti Finserv × Zen Money Studio
     repo: https://github.com/spacebuilder13/project-om-shanti
@@ -75,5 +87,5 @@ hubs:
     notebooklm: https://notebooklm.google.com/notebook/64f336ac-cbcb-4345-ba33-e01365a510cf
     created: 2026-05-24
     notes: >-
-      Monorepo: apps/phase1 (pod), apps/findow-phase1 (client deck). paul-deck archived in vibe-coding-stack.
+      Monorepo: apps/phase1 (pod), apps/findow-phase1 (client deck). paul-deck archived in vibe-coding-stack/growth/partners.
       DSS router, harness field guide, SOW Phase 1.

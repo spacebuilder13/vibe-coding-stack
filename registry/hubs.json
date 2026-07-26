@@ -39,9 +39,11 @@
       "client_poc": "Ishika",
       "url": "https://zms-osf-phase-1.vercel.app",
       "url_workshop": "https://project-om-shanti.vercel.app",
-      "url_client": "https://findow-phase1.vercel.app",
-      "last_verified": "2026-06-17",
-      "notes": "Pod: apps/phase1. Client deck: apps/findow-phase1. paul-deck archived in vibe-coding-stack/apps/paul-deck."
+      "url_client": "https://findow-phase-1.vercel.app",
+      "linear_project_name": "Om Shanti Finserv",
+      "linear_project_url": "https://linear.app/when-zen/project/om-shanti-finserv-50691fd7cb98",
+      "last_verified": "2026-06-23",
+      "notes": "Pod: apps/phase1. Client deck: findow-phase-1 (external). One Linear project for both repos. Bootstrap: project-om-shanti/tools/linear/_osf-linear-setup.mjs"
     },
     {
       "id": "max-spare-discovery",
@@ -59,6 +61,22 @@
       "confidential": true,
       "last_verified": "2026-05-31",
       "notes": "Asia's largest seal manufacturer (~Rs 337 Cr). Borrows module craft + Zen design from Project OB (BPS); carries NONE of BPS content. All data illustrative/public. Worked by Utsav + Pooja."
+    },
+    {
+      "id": "blue-diamond-voyage",
+      "title": "Blue Diamond Voyage × Spaceships & Atoms",
+      "type": "repo",
+      "repo": "spacebuilder13/project-blue-diamond",
+      "local_path": "/Users/jarvis/Documents/Builder/project-blue-diamond",
+      "knowledge_path": "knowledge/",
+      "notebooklm_urls": [
+        "https://notebooklm.google.com/notebook/35c841ef-9220-433a-a478-003cff1c4f85"
+      ],
+      "engagement_phase": "harness-bootstrap",
+      "client_poc": "Yash",
+      "confidential": true,
+      "last_verified": "2026-07-26",
+      "notes": "AI Travel Curator Dashboard · travel agents. Workshop kitchen only. NLM multiquery complete. Next: offline arch + itinerary skills."
     },
     {
       "id": "janata-masala",
