@@ -210,6 +210,15 @@
       "chains_to": []
     },
     {
+      "id": "xiaohei-illustrations",
+      "trigger": "/xiaohei-illustrations",
+      "domain": "design",
+      "when": "Article/blog/post needs body illustrations — shot list + hand-drawn Xiaohei-style images via Cursor's built-in image gen",
+      "avoid_when": "UI design, PPT infographics, commercial illustration, technical architecture diagrams",
+      "cost": "medium",
+      "chains_to": []
+    },
+    {
       "id": "design-capture",
       "trigger": "/design-capture",
       "domain": "design",

@@ -23,7 +23,7 @@ A **personal, versioned control plane** for how you build with agents: skills, p
 | `workflows/` | Human + agent procedures (e.g. conversation → plan → artifact) |
 | `registry/` | Machine-readable indexes (`tools.json`, `hubs.json`) for agents or scripts |
 | `tools/` | Vendored CLIs: YouTube comment export, **competitive site → Obsidian research vault**; each tool has its own `AGENTS.md` |
-| `.cursor/skills/` | Project skills (e.g. **competitive-site-research**) |
+| `.cursor/skills/` | Project skills (e.g. **competitive-site-research**, **xiaohei-illustrations** — hand-drawn article illustrations via Cursor image gen) |
 | `prompts/competitive-research-agent.md` | Persona + deliverables for competitive / IA research runs |
 
 ## Principles (v1)

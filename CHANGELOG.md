@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 — 2026-07-30
+
+New skill family: article illustrations.
+
+- `.cursor/skills/xiaohei-illustrations/` — English port of Ian's Xiaohei illustration skill
+  (source: helloianneo/ian-xiaohei-illustrations, MIT). SKILL.md + 5 references
+  (style-dna, xiaohei-ip, composition-patterns, prompt-template, qa-checklist) + NOTICE.md
+  attribution. Generates 16:9 white-background hand-drawn article illustrations via
+  Cursor's built-in image generation (2.4+), with a prompt-only fallback and a built-in
+  smoke-test command.
+- `registry/skills.json` — `/xiaohei-illustrations` entry (domain: design, cost: medium).
+- `README.md` — repo map row for the new skill.
+
 ## 0.2.2 — 2026-06-17
 
 OSF deck housekeeping.
