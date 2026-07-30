@@ -17,7 +17,7 @@ New skill family: article illustrations.
 
 OSF deck housekeeping.
 
-- `apps/paul-deck/` — archived reference deck moved from `project-om-shanti`
+- `growth/partners/paul-deck/` — archived reference deck moved from `project-om-shanti`
 - `app-store/STORE.md` — OSF client deck URL → `findow-phase1.vercel.app`
 - `registry/hubs.json` + `hubs/manifest.yaml` — om-shanti client deck path + URLs
 

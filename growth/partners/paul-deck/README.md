@@ -17,4 +17,4 @@ npm run dev
 
 ## Provenance
 
-Originally lived at `project-om-shanti/apps/paul-deck`. Canonical copy is here in vibe-coding-stack.
+Originally lived at `project-om-shanti/apps/paul-deck`. Canonical copy: `vibe-coding-stack/growth/partners/paul-deck`.
