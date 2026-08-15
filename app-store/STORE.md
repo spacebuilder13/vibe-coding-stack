@@ -19,6 +19,8 @@ Auth: Google login via Supabase.
 | OSF Phase 1 — Pod | https://zms-osf-phase-1.vercel.app | Insurance cases gallery + harness field guide for Utsav + Pooja. `/learn` `/cases` `/campaign`. | 2026-06-15 |
 | OSF Client Deck | https://findow-phase1.vercel.app | Password-gated Phase 1 narrative deck. `project-om-shanti/apps/findow-phase1`. | 2026-06-17 |
 | Project Royale | https://project-royale.vercel.app | Operations blueprint for rotogravure printing + pouch packaging. Passphrase-gated external V1. | 2026-06-17 |
+| Ember — Smart Container | https://ember.atomships.space | Opportunity brief for Ember Cookware. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-ember.vercel.app | 2026-08-14 |
+| BDV — engagement brief | https://bdv.atomships.space | Passphrase-gated 3-day brief for Harsh × Yash. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-bdv.vercel.app | 2026-08-15 |
 
 ---
 

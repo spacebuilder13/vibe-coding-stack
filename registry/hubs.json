@@ -75,8 +75,8 @@
       "engagement_phase": "harness-bootstrap",
       "client_poc": "Yash",
       "confidential": true,
-      "last_verified": "2026-07-26",
-      "notes": "AI Travel Curator Dashboard · travel agents. Workshop kitchen only. NLM multiquery complete. Next: offline arch + itinerary skills."
+      "last_verified": "2026-08-15",
+      "notes": "AI Travel Curator Dashboard · travel agents. Workshop kitchen only. Client share URL is bdv.atomships.space (atomships/apps/bdv). Mission tool remains internal. NLM multiquery complete."
     },
     {
       "id": "janata-masala",
@@ -95,6 +95,38 @@
       "engagement_phase": "M1 harness",
       "last_verified": "2026-06-11",
       "notes": "Agentic commerce workspace. Adventure + Explorations (WhatsApp, Voice, Architecture). Claude + ElevenLabs API routes."
+    },
+    {
+      "id": "atomships",
+      "title": "Spaceships & Atoms — kitchen",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships",
+      "stack": "static-html",
+      "deployment": "vercel",
+      "url": "https://ember.atomships.space",
+      "url_vercel": "https://atomships-ember.vercel.app",
+      "engagement_phase": "first-window",
+      "client_poc": "Ember",
+      "confidential": true,
+      "last_verified": "2026-08-15",
+      "notes": "Business kitchen for client windows on atomships.space. Windows: Ember (apps/ember → ember.atomships.space), BDV engagement brief (apps/bdv → bdv.atomships.space). Apex stays GoDaddy WebsiteBuilder. Private GitHub; windows public + noindex."
+    },
+    {
+      "id": "atomships-bdv",
+      "title": "Blue Diamond Voyage — engagement brief",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/bdv",
+      "stack": "static-html",
+      "deployment": "vercel",
+      "url": "https://bdv.atomships.space",
+      "url_vercel": "https://atomships-bdv.vercel.app",
+      "engagement_phase": "engagement-brief",
+      "client_poc": "Harsh × Yash",
+      "confidential": true,
+      "last_verified": "2026-08-15",
+      "notes": "Passphrase-gated 3-day engagement brief. Kitchen window: atomships/apps/bdv → Vercel atomships-bdv. Workshop notes stay in project-blue-diamond. Public URL + noindex."
     }
   ]
 }
