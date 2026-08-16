@@ -109,7 +109,7 @@
       "engagement_phase": "kitchen",
       "confidential": true,
       "last_verified": "2026-08-16",
-      "notes": "Business kitchen for client windows on atomships.space. Apex homepage: apps/www → atomships-www → atomships.space (www redirects to apex; DNS A/CNAME pending at GoDaddy). Client windows: Ember (apps/ember → ember.atomships.space), BDV (apps/bdv → bdv.atomships.space). Do not change nameservers. Private GitHub; windows public + noindex."
+      "notes": "Business kitchen for client windows on atomships.space. Apex homepage: apps/www → atomships-www → atomships.space (www redirects to apex; DNS A/CNAME pending at GoDaddy). Client windows: Ember (spacebuilder13/ember-ecosystem → Vercel atomships-ember → ember.atomships.space; atomships/apps/ember is a retired stub), BDV (apps/bdv → bdv.atomships.space). Do not change nameservers. Private GitHub; windows public + noindex."
     },
     {
       "id": "atomships-www",
@@ -125,6 +125,21 @@
       "confidential": false,
       "last_verified": "2026-08-16",
       "notes": "Public noindex film. Kitchen window: atomships/apps/www → Vercel atomships-www. Canonical apex; www.atomships.space 308s to apex. Until GoDaddy A/@ and CNAME/www are pointed at Vercel, use atomships-www.vercel.app."
+    },
+    {
+      "id": "atomships-ember",
+      "title": "Ember — Smart Container prototype",
+      "type": "repo",
+      "repo": "spacebuilder13/ember-ecosystem",
+      "local_path": "/Users/jarvis/Documents/Builder/ember-ecosystem",
+      "stack": "vite-tanstack-start",
+      "deployment": "vercel",
+      "url": "https://ember.atomships.space",
+      "url_vercel": "https://atomships-ember.vercel.app",
+      "engagement_phase": "prototype",
+      "confidential": false,
+      "last_verified": "2026-08-16",
+      "notes": "Prototype app. Source: GitHub spacebuilder13/ember-ecosystem (exception to static HTML in atomships/apps/{slug}). Vercel project still atomships-ember → ember.atomships.space. Kitchen stub atomships/apps/ember is retired. Public URL + noindex. Do not change nameservers; do not touch ember/bdv CNAMEs."
     },
     {
       "id": "atomships-bdv",

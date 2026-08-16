@@ -89,3 +89,17 @@ hubs:
     notes: >-
       Monorepo: apps/phase1 (pod), apps/findow-phase1 (client deck). paul-deck archived in vibe-coding-stack/growth/partners.
       DSS router, harness field guide, SOW Phase 1.
+  - id: atomships
+    name: Spaceships & Atoms — kitchen
+    repo: https://github.com/spacebuilder13/atomships
+    local: /Users/jarvis/Documents/Builder/atomships
+    stack: static-html
+    deployment: vercel
+    url: https://atomships.space
+    created: 2026-08-14
+    confidential: true
+    notes: >-
+      Business kitchen for client windows on atomships.space. Apex homepage:
+      apps/www → atomships-www. Ember live source is ember-ecosystem
+      (Vercel atomships-ember). BDV: apps/bdv. Do not change nameservers.
+      Private GitHub; windows public + noindex.
