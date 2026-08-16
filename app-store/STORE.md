@@ -21,6 +21,7 @@ Auth: Google login via Supabase.
 | Project Royale | https://project-royale.vercel.app | Operations blueprint for rotogravure printing + pouch packaging. Passphrase-gated external V1. | 2026-06-17 |
 | Ember — Smart Container | https://ember.atomships.space | Opportunity brief for Ember Cookware. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-ember.vercel.app | 2026-08-14 |
 | BDV — engagement brief | https://bdv.atomships.space | Passphrase-gated 3-day brief for Harsh × Yash. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-bdv.vercel.app | 2026-08-15 |
+| Spaceships & Atoms — homepage | https://atomships.space | Public noindex film. Static HTML. Kitchen: spacebuilder13/atomships apps/www. Until DNS: https://atomships-www.vercel.app | 2026-08-16 |
 
 ---
 

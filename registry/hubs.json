@@ -104,13 +104,27 @@
       "local_path": "/Users/jarvis/Documents/Builder/atomships",
       "stack": "static-html",
       "deployment": "vercel",
-      "url": "https://ember.atomships.space",
-      "url_vercel": "https://atomships-ember.vercel.app",
-      "engagement_phase": "first-window",
-      "client_poc": "Ember",
+      "url": "https://atomships.space",
+      "url_vercel": "https://atomships-www.vercel.app",
+      "engagement_phase": "kitchen",
       "confidential": true,
-      "last_verified": "2026-08-15",
-      "notes": "Business kitchen for client windows on atomships.space. Windows: Ember (apps/ember → ember.atomships.space), BDV engagement brief (apps/bdv → bdv.atomships.space). Apex stays GoDaddy WebsiteBuilder. Private GitHub; windows public + noindex."
+      "last_verified": "2026-08-16",
+      "notes": "Business kitchen for client windows on atomships.space. Apex homepage: apps/www → atomships-www → atomships.space (www redirects to apex; DNS A/CNAME pending at GoDaddy). Client windows: Ember (apps/ember → ember.atomships.space), BDV (apps/bdv → bdv.atomships.space). Do not change nameservers. Private GitHub; windows public + noindex."
+    },
+    {
+      "id": "atomships-www",
+      "title": "Spaceships & Atoms — public homepage",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/www",
+      "stack": "static-html",
+      "deployment": "vercel",
+      "url": "https://atomships.space",
+      "url_vercel": "https://atomships-www.vercel.app",
+      "engagement_phase": "public-homepage",
+      "confidential": false,
+      "last_verified": "2026-08-16",
+      "notes": "Public noindex film. Kitchen window: atomships/apps/www → Vercel atomships-www. Canonical apex; www.atomships.space 308s to apex. Until GoDaddy A/@ and CNAME/www are pointed at Vercel, use atomships-www.vercel.app."
     },
     {
       "id": "atomships-bdv",
