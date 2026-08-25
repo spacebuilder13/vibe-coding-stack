@@ -109,7 +109,7 @@
       "engagement_phase": "kitchen",
       "confidential": true,
       "last_verified": "2026-08-16",
-      "notes": "Business kitchen for client windows on atomships.space. Apex homepage: apps/www → atomships-www → atomships.space (www redirects to apex; DNS A/CNAME pending at GoDaddy). Client windows: Ember (spacebuilder13/ember-ecosystem → Vercel atomships-ember → ember.atomships.space; atomships/apps/ember is a retired stub), BDV (apps/bdv → bdv.atomships.space). Do not change nameservers. Private GitHub; windows public + noindex."
+      "notes": "Business kitchen for client windows on atomships.space. Apex homepage: apps/www → atomships-www → atomships.space (www redirects to apex; DNS A/CNAME pending at GoDaddy). Client windows: Ember prototype (spacebuilder13/ember-ecosystem → Vercel atomships-ember → ember.atomships.space), Ember hub (spacebuilder13/project-ember apps/hub → Vercel project-ember → project-ember-ten.vercel.app; atomships/apps/ember is a retired stub listing both), BDV (apps/bdv → bdv.atomships.space). Do not change nameservers. Do not swap the ember domain onto the hub. Private GitHub; windows public + noindex."
     },
     {
       "id": "atomships-www",
@@ -139,7 +139,7 @@
       "engagement_phase": "prototype",
       "confidential": false,
       "last_verified": "2026-08-16",
-      "notes": "Prototype app. Source: GitHub spacebuilder13/ember-ecosystem (exception to static HTML in atomships/apps/{slug}). Vercel project still atomships-ember → ember.atomships.space. Kitchen stub atomships/apps/ember is retired. Public URL + noindex. Do not change nameservers; do not touch ember/bdv CNAMEs."
+      "notes": "Prototype app. Source: GitHub spacebuilder13/ember-ecosystem (exception to static HTML in atomships/apps/{slug}). Vercel project still atomships-ember → ember.atomships.space. Hub is a separate kitchen: spacebuilder13/project-ember. Kitchen stub atomships/apps/ember is retired and lists both windows. Public URL + noindex. Do not change nameservers; do not touch ember/bdv CNAMEs."
     },
     {
       "id": "atomships-bdv",
@@ -156,6 +156,34 @@
       "confidential": true,
       "last_verified": "2026-08-15",
       "notes": "Passphrase-gated 3-day engagement brief. Kitchen window: atomships/apps/bdv → Vercel atomships-bdv. Workshop notes stay in project-blue-diamond. Public URL + noindex."
+    },
+    {
+      "id": "project-ember",
+      "title": "Project Ember — kitchen",
+      "type": "repo",
+      "repo": "spacebuilder13/project-ember",
+      "local_path": "/Users/jarvis/Documents/Builder/project-ember",
+      "stack": "expo-web",
+      "deployment": "vercel",
+      "url": "https://project-ember-ten.vercel.app",
+      "engagement_phase": "kitchen",
+      "confidential": true,
+      "last_verified": "2026-08-25",
+      "notes": "Ember product kitchen. Hub window: apps/hub → Vercel project-ember → project-ember-ten.vercel.app. Prototype stays on ember-ecosystem / ember.atomships.space — do not swap that domain. Private GitHub; hub public + noindex. Copied from ananthember/ember-kitchen (files only, fresh history)."
+    },
+    {
+      "id": "project-ember-hub",
+      "title": "Ember — community hub",
+      "type": "repo",
+      "repo": "spacebuilder13/project-ember",
+      "local_path": "/Users/jarvis/Documents/Builder/project-ember/apps/hub",
+      "stack": "expo-web",
+      "deployment": "vercel",
+      "url": "https://project-ember-ten.vercel.app",
+      "engagement_phase": "hub",
+      "confidential": false,
+      "last_verified": "2026-08-25",
+      "notes": "Expo web community hub (Home, Recipes, Plan, Shop, You). Kitchen window: project-ember/apps/hub → Vercel project-ember. Public URL + noindex. Frontend-only (AsyncStorage). Do not point ember.atomships.space here."
     }
   ]
 }
