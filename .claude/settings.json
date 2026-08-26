@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "node",
+      "args": ["tools/n8n-mcp/index.js"],
+      "env": {
+        "N8N_BASE_URL": "https://whenmoney.app.n8n.cloud",
+        "N8N_API_KEY": "REPLACE_WITH_N8N_API_KEY"
+      }
+    }
+  },
+  "sandbox": {
+    "network": {
+      "allowedDomains": ["whenmoney.app.n8n.cloud"]
+    }
+  }
+}

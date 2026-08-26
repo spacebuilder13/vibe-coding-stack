@@ -1,0 +1,360 @@
+{
+  "name": "CRM Sync from Transcripts v3",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "aa000001-0001-0001-0001-000000000001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "'1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY' in parents and mimeType = 'application/vnd.google-apps.document'",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "id": "aa000002-0002-0002-0002-000000000002",
+      "name": "Search Google Docs",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [220, 0],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ywlAvR4Edjv5N0Aj",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "filter-valid-id",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "aa000003-0003-0003-0003-000000000003",
+      "name": "Filter Valid Docs",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "aa000004-0004-0004-0004-000000000004",
+      "name": "Loop Docs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "aa000005-0005-0005-0005-000000000005",
+      "name": "Download as Plain Text",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [880, 120],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ywlAvR4Edjv5N0Aj",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Decode binary output from Google Drive native download\nconst binaryData = $binary?.data;\nlet transcript = '';\nif (binaryData?.data) {\n  transcript = Buffer.from(binaryData.data, 'base64').toString('utf-8').substring(0, 4000);\n}\n\nconst requestBody = JSON.stringify({\n  model: 'claude-haiku-4-5-20251001',\n  max_tokens: 1024,\n  system: 'You are processing call transcripts for WHEN Travel, a travel savings coaching platform. Extract the following as a JSON object only — no preamble, no markdown, no code fences.\\n\\n{\"name\": \"client first name\", \"destination\": \"travel destination or null\", \"timeline\": \"when they want to travel or null\", \"budget_range\": \"total trip budget mentioned or null\", \"emotional_blocker\": \"main fear or hesitation around money or travel\", \"jobs_to_be_done\": \"transformation they want from this\", \"memorable_quote\": \"most emotionally resonant thing they said\", \"pipeline_stage\": \"one of: Discovery Done | Plan Delivered | Active Saver | Milestone Unlocked | Trip Completed\"}\\n\\nStage rules:\\n- Discovery Done: first intake call, no plan yet delivered\\n- Plan Delivered: coach mentions sending a plan\\n- Active Saver: client tracking savings progress\\n- Milestone Unlocked: client has booked flights or accommodation\\n- Trip Completed: trip has already happened',\n  messages: [{ role: 'user', content: transcript }]\n});\n\nreturn { json: { requestBody, filename: $('Loop Docs').item.json.name } };"
+      },
+      "id": "aa000006-0006-0006-0006-000000000006",
+      "name": "Build Claude Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "ANTHROPIC_API_KEY_PLACEHOLDER" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.requestBody }}",
+        "options": {}
+      },
+      "id": "aa000007-0007-0007-0007-000000000007",
+      "name": "Call Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1320, 120],
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "const responseText = $input.item.json.content[0].text;\nconst cleaned = responseText\n  .replace(/```json\\n?/g, '')\n  .replace(/```\\n?/g, '')\n  .trim();\n\ntry {\n  const extracted = JSON.parse(cleaned);\n  return { json: extracted };\n} catch (e) {\n  return { json: {\n    name: null,\n    destination: null,\n    timeline: null,\n    budget_range: null,\n    emotional_blocker: null,\n    jobs_to_be_done: null,\n    pipeline_stage: 'Insufficient Data',\n    memorable_quote: null\n  }};\n}"
+      },
+      "id": "aa000008-0008-0008-0008-000000000008",
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/objects/people/records/query",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={ \"limit\": 500 }",
+        "options": {}
+      },
+      "id": "aa000009-0009-0009-0009-000000000009",
+      "name": "Fetch All People",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1760, 120],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const newData = $('Parse Response').item.json;\nconst allRecords = $('Fetch All People').item.json.data;\nconst filename = $('Loop Docs').item.json.name;\nconst fallbackName = filename.split('_Session')[0].trim();\n\nif (!newData.name && fallbackName) {\n  newData.name = fallbackName;\n}\n\nconst existing = allRecords.find(r =>\n  r.values.name &&\n  r.values.name[0] &&\n  r.values.name[0].full_name === newData.name\n);\n\nif (!existing) {\n  return {\n    json: {\n      isNew: 'true',\n      name: newData.name || fallbackName,\n      destination: newData.destination,\n      timeline: newData.timeline,\n      budget_range: newData.budget_range,\n      emotional_blocker: newData.emotional_blocker,\n      jobs_to_be_done: newData.jobs_to_be_done,\n      memorable_quote: newData.memorable_quote,\n      pipeline_stage: newData.pipeline_stage\n    }\n  };\n}\n\nconst blockers = (existing.values.blockers_pain_point || []).map(b => b.value);\nif (newData.emotional_blocker) blockers.push(newData.emotional_blocker);\n\nconst jtbd = (existing.values.jtbd || []).map(j => j.value);\nif (newData.jobs_to_be_done) jtbd.push(newData.jobs_to_be_done);\n\nconst quotes = (existing.values.memorable_quotes || []).map(q => q.value);\nif (newData.memorable_quote) quotes.push(newData.memorable_quote);\n\nconst values = {};\nif (newData.pipeline_stage) values.journey_stage = [{ value: newData.pipeline_stage }];\nif (newData.timeline) values.time_to_travel = [{ value: newData.timeline }];\nif (newData.budget_range) values.budget_range = [{ value: newData.budget_range }];\nif (newData.destination) values.destination_city = [{ value: newData.destination }];\nif (newData.name) values.name_2 = [{ value: newData.name }];\nif (blockers.length > 0) values.blockers_pain_point = [{ value: blockers.join('\\n\\n') }];\nif (jtbd.length > 0) values.jtbd = [{ value: jtbd.join('\\n\\n') }];\nif (quotes.length > 0) values.memorable_quotes = [{ value: quotes.join('\\n\\n') }];\n\nreturn {\n  json: {\n    isNew: 'false',\n    recordId: existing.id.record_id,\n    body: JSON.stringify({ data: { values } })\n  }\n};"
+      },
+      "id": "aa000010-0010-0010-0010-000000000010",
+      "name": "Match and Decide",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1980, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-is-new",
+              "leftValue": "={{ $json.isNew }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "aa000011-0011-0011-0011-000000000011",
+      "name": "New or Existing?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [2200, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/objects/people/records",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"data\": {\n    \"values\": {\n      \"name\": [{ \"first_name\": \"{{$json.name || ''}}\", \"last_name\": \"\", \"full_name\": \"{{$json.name || ''}}\" }],\n      \"name_2\": [{ \"value\": \"{{$json.name || ''}}\" }],\n      \"destination_city\": [{ \"value\": \"{{$json.destination || ''}}\" }],\n      \"time_to_travel\": [{ \"value\": \"{{$json.timeline || ''}}\" }],\n      \"budget_range\": [{ \"value\": \"{{$json.budget_range || ''}}\" }],\n      \"blockers_pain_point\": [{ \"value\": \"{{$json.emotional_blocker || ''}}\" }],\n      \"jtbd\": [{ \"value\": \"{{$json.jobs_to_be_done || ''}}\" }],\n      \"journey_stage\": [{ \"value\": \"{{$json.pipeline_stage || ''}}\" }]\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "aa000012-0012-0012-0012-000000000012",
+      "name": "Create Person",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2420, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.attio.com/v2/lists/4bd161bd-2b58-4c11-9ee5-004257444bb2/entries",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"data\": {\n    \"parent_record_id\": \"{{$json.data.id.record_id}}\",\n    \"parent_object\": \"people\",\n    \"entry_values\": {}\n  }\n}",
+        "options": {}
+      },
+      "id": "aa000013-0013-0013-0013-000000000013",
+      "name": "Add to List",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2640, -120]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ \"https://api.attio.com/v2/objects/people/records/\" + $json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer ATTIO_API_KEY_PLACEHOLDER" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "aa000014-0014-0014-0014-000000000014",
+      "name": "Update Person",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2420, 120]
+    },
+    {
+      "parameters": {
+        "content": "## CRM Sync from Transcripts v3\n\nReads all Google Docs in the transcripts folder, extracts CRM fields via Claude Haiku, then creates or updates records in Attio.\n\n**Google Drive folder:** 1W3wLJTBeXuFcBaWVNpCHnyenFIoc2gRY\n**Attio list:** 4bd161bd-2b58-4c11-9ee5-004257444bb2\n\n**Field slugs:** name · name_2 · destination_city · time_to_travel · budget_range · blockers_pain_point · jtbd · journey_stage · memorable_quotes",
+        "height": 180,
+        "width": 420,
+        "color": 3
+      },
+      "id": "aa000015-0015-0015-0015-000000000015",
+      "name": "README",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [0, -280]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Search Google Docs", "type": "main", "index": 0 }]]
+    },
+    "Search Google Docs": {
+      "main": [[{ "node": "Filter Valid Docs", "type": "main", "index": 0 }]]
+    },
+    "Filter Valid Docs": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    },
+    "Loop Docs": {
+      "main": [
+        [],
+        [{ "node": "Download as Plain Text", "type": "main", "index": 0 }]
+      ]
+    },
+    "Download as Plain Text": {
+      "main": [[{ "node": "Build Claude Request", "type": "main", "index": 0 }]]
+    },
+    "Build Claude Request": {
+      "main": [[{ "node": "Call Claude", "type": "main", "index": 0 }]]
+    },
+    "Call Claude": {
+      "main": [[{ "node": "Parse Response", "type": "main", "index": 0 }]]
+    },
+    "Parse Response": {
+      "main": [[{ "node": "Fetch All People", "type": "main", "index": 0 }]]
+    },
+    "Fetch All People": {
+      "main": [[{ "node": "Match and Decide", "type": "main", "index": 0 }]]
+    },
+    "Match and Decide": {
+      "main": [[{ "node": "New or Existing?", "type": "main", "index": 0 }]]
+    },
+    "New or Existing?": {
+      "main": [
+        [{ "node": "Create Person", "type": "main", "index": 0 }],
+        [{ "node": "Update Person", "type": "main", "index": 0 }]
+      ]
+    },
+    "Create Person": {
+      "main": [[{ "node": "Add to List", "type": "main", "index": 0 }]]
+    },
+    "Add to List": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    },
+    "Update Person": {
+      "main": [[{ "node": "Loop Docs", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ad826709951b1d77e0bc55cdca05f4aac3d499bd6387bcef2412a9cdb171c483"
+  },
+  "tags": []
+}
