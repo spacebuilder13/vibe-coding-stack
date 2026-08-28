@@ -100,10 +100,12 @@ hubs:
     confidential: true
     notes: >-
       Business kitchen for client windows on atomships.space. Apex homepage:
-      apps/www → atomships-www. Ember prototype: ember-ecosystem (Vercel
-      atomships-ember). Ember hub: project-ember (Vercel project-ember).
-      BDV: apps/bdv. Do not change nameservers.
-      Private GitHub; windows public + noindex.
+      apps/www → atomships-www. One Ember door: ember-ecosystem (Vercel
+      atomships-ember) → ember.atomships.space (case study / S&A understanding;
+      live site today is still the Smart Container prototype). Ember hub is a
+      linked prototype in project-ember (Vercel project-ember) — not an
+      atomships window; no kitchen.atomships.space. BDV: apps/bdv.
+      Do not change nameservers. Private GitHub; windows public + noindex.
   - id: project-ember
     name: Project Ember — kitchen
     repo: https://github.com/spacebuilder13/project-ember
@@ -114,6 +116,8 @@ hubs:
     created: 2026-08-25
     confidential: true
     notes: >-
-      Ember product kitchen. Hub: apps/hub → Vercel project-ember →
+      Ember product kitchen. Hub is the linked client prototype (not an
+      atomships window): apps/hub → Vercel project-ember →
       project-ember-ten.vercel.app (project-ember.vercel.app is taken).
-      Prototype stays on ember-ecosystem / ember.atomships.space.
+      One Ember door stays on ember-ecosystem / ember.atomships.space
+      (case study). No kitchen.atomships.space.

@@ -19,8 +19,8 @@ Auth: Google login via Supabase.
 | OSF Phase 1 — Pod | https://zms-osf-phase-1.vercel.app | Insurance cases gallery + harness field guide for Utsav + Pooja. `/learn` `/cases` `/campaign`. | 2026-06-15 |
 | OSF Client Deck | https://findow-phase1.vercel.app | Password-gated Phase 1 narrative deck. `project-om-shanti/apps/findow-phase1`. | 2026-06-17 |
 | Project Royale | https://project-royale.vercel.app | Operations blueprint for rotogravure printing + pouch packaging. Passphrase-gated external V1. | 2026-06-17 |
-| Ember — Smart Container | https://ember.atomships.space | Prototype app (TanStack Start / Vite). Repo: spacebuilder13/ember-ecosystem. Vercel atomships-ember. Public + noindex. | 2026-08-14 |
-| Ember — community hub | https://project-ember-ten.vercel.app | Expo web hub (recipes, plan, shop). Kitchen: spacebuilder13/project-ember apps/hub. Vercel project-ember. Public + noindex. | 2026-08-25 |
+| Ember — case study | https://ember.atomships.space | One Ember door on atomships.space. Role: living case study / S&A understanding. Live site still Smart Container until later. Repo: spacebuilder13/ember-ecosystem. Vercel atomships-ember. Public + noindex. | 2026-08-14 |
+| Ember — community hub | https://project-ember-ten.vercel.app | Linked client prototype (recipes, plan, shop) — not an atomships subdomain. Kitchen: spacebuilder13/project-ember apps/hub. Vercel project-ember. Public + noindex. | 2026-08-25 |
 | BDV — engagement brief | https://bdv.atomships.space | Passphrase-gated 3-day brief for Harsh × Yash. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-bdv.vercel.app | 2026-08-15 |
 | Spaceships & Atoms — homepage | https://atomships.space | Public noindex film. Static HTML. Kitchen: spacebuilder13/atomships apps/www. Until DNS: https://atomships-www.vercel.app | 2026-08-16 |
 
