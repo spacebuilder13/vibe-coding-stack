@@ -158,6 +158,21 @@
       "notes": "Passphrase-gated 3-day engagement brief. Kitchen window: atomships/apps/bdv → Vercel atomships-bdv. Workshop notes stay in project-blue-diamond. Public URL + noindex."
     },
     {
+      "id": "atomships-memreel",
+      "title": "MemReel — conversation",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/memreel",
+      "stack": "static-html",
+      "deployment": "vercel",
+      "url": "https://memreel.atomships.space",
+      "url_vercel": "https://atomships-memreel.vercel.app",
+      "engagement_phase": "conversation",
+      "confidential": true,
+      "last_verified": "2026-08-29",
+      "notes": "Passphrase-gated conversation film. Kitchen window: atomships/apps/memreel → Vercel atomships-memreel → memreel.atomships.space. Public URL + noindex. Do not change nameservers; add CNAME memreel only."
+    },
+    {
       "id": "project-ember",
       "title": "Project Ember — kitchen",
       "type": "repo",

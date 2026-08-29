@@ -22,6 +22,7 @@ Auth: Google login via Supabase.
 | Ember — case study | https://ember.atomships.space | One Ember door on atomships.space. Role: living case study / S&A understanding. Live site still Smart Container until later. Repo: spacebuilder13/ember-ecosystem. Vercel atomships-ember. Public + noindex. | 2026-08-14 |
 | Ember — community hub | https://project-ember-ten.vercel.app | Linked client prototype (recipes, plan, shop) — not an atomships subdomain. Kitchen: spacebuilder13/project-ember apps/hub. Vercel project-ember. Public + noindex. | 2026-08-25 |
 | BDV — engagement brief | https://bdv.atomships.space | Passphrase-gated 3-day brief for Harsh × Yash. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-bdv.vercel.app | 2026-08-15 |
+| MemReel — conversation | https://memreel.atomships.space | Passphrase-gated conversation film. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships apps/memreel. Vercel atomships-memreel. | 2026-08-29 |
 | Spaceships & Atoms — homepage | https://atomships.space | Public noindex film. Static HTML. Kitchen: spacebuilder13/atomships apps/www. Until DNS: https://atomships-www.vercel.app | 2026-08-16 |
 
 ---
