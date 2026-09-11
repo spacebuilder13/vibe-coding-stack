@@ -24,6 +24,8 @@ Auth: Google login via Supabase.
 | BDV — engagement brief | https://bdv.atomships.space | Passphrase-gated 3-day brief for Harsh × Yash. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships. Until DNS: https://atomships-bdv.vercel.app | 2026-08-15 |
 | MemReel — conversation | https://memreel.atomships.space | Passphrase-gated conversation film. Static HTML, public + noindex. Kitchen: spacebuilder13/atomships apps/memreel. Vercel atomships-memreel. | 2026-08-29 |
 | Spaceships & Atoms — homepage | https://atomships.space | Public noindex film. Static HTML. Kitchen: spacebuilder13/atomships apps/www. Until DNS: https://atomships-www.vercel.app | 2026-08-16 |
+| The Lab — partner door | https://lab.atomships.space | Named-cookie office map for Jash. Not a client window. Kitchen: spacebuilder13/atomships apps/lab. Vercel atomships-lab. Until DNS: https://atomships-lab.vercel.app | 2026-09-07 |
+| Cava — client door | https://cava.atomships.space | Passphrase-gated door for Ria Mittal / Cava Athleisure. Static HTML, public + noindex. One door only. Kitchen: spacebuilder13/atomships apps/cava. Vercel atomships-cava. Until DNS: https://atomships-cava.vercel.app | 2026-09-11 |
 
 ---
 

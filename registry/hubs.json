@@ -173,6 +173,37 @@
       "notes": "Passphrase-gated conversation film. Kitchen window: atomships/apps/memreel → Vercel atomships-memreel → memreel.atomships.space. Public URL + noindex. Do not change nameservers; add CNAME memreel only."
     },
     {
+      "id": "atomships-lab",
+      "title": "The Lab — partner door",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/lab",
+      "stack": "static-html-plus-api",
+      "deployment": "vercel",
+      "url": "https://lab.atomships.space",
+      "url_vercel": "https://atomships-lab.vercel.app",
+      "engagement_phase": "partner-onboarding",
+      "confidential": true,
+      "last_verified": "2026-09-07",
+      "notes": "Named-cookie office map for Jash. Not a client window. Kitchen: atomships/apps/lab → Vercel atomships-lab → lab.atomships.space. Public URL + noindex. CNAME lab only. No kitchen.atomships.space. Env: LAB_USER, LAB_PASSWORD, SESSION_SECRET."
+    },
+    {
+      "id": "atomships-cava",
+      "title": "Cava Athleisure — client door",
+      "type": "repo",
+      "repo": "spacebuilder13/atomships",
+      "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/cava",
+      "stack": "static-html",
+      "deployment": "vercel",
+      "url": "https://cava.atomships.space",
+      "url_vercel": "https://atomships-cava.vercel.app",
+      "engagement_phase": "conversation",
+      "client_poc": "Ria Mittal",
+      "confidential": true,
+      "last_verified": "2026-09-11",
+      "notes": "Passphrase-gated client door for Ria Mittal / Cava Athleisure. Kitchen window: atomships/apps/cava → Vercel atomships-cava → cava.atomships.space. Public URL + noindex. One door only — not a client prototype on a second subdomain. Do not copy ember-ecosystem or apps/lab. Do not change nameservers; add CNAME cava only. Do not name Cava on apps/www."
+    },
+    {
       "id": "project-ember",
       "title": "Project Ember — kitchen",
       "type": "repo",
