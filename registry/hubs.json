@@ -159,18 +159,18 @@
     },
     {
       "id": "atomships-memreel",
-      "title": "MemReel — conversation",
+      "title": "MemReel — Memory Entropy",
       "type": "repo",
       "repo": "spacebuilder13/atomships",
       "local_path": "/Users/jarvis/Documents/Builder/atomships/apps/memreel",
-      "stack": "static-html",
+      "stack": "nextjs",
       "deployment": "vercel",
       "url": "https://memreel.atomships.space",
       "url_vercel": "https://atomships-memreel.vercel.app",
       "engagement_phase": "conversation",
       "confidential": true,
-      "last_verified": "2026-08-29",
-      "notes": "Passphrase-gated conversation film. Kitchen window: atomships/apps/memreel → Vercel atomships-memreel → memreel.atomships.space. Public URL + noindex. Do not change nameservers; add CNAME memreel only."
+      "last_verified": "2026-09-12",
+      "notes": "Memory Entropy explainer. Kitchen window: atomships/apps/memreel → Vercel atomships-memreel → memreel.atomships.space. Public URL + noindex. Retired conversation film in apps/memreel/archive/conversation-film/. Do not change nameservers; CNAME memreel only."
     },
     {
       "id": "atomships-lab",
