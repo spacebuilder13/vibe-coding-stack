@@ -25,7 +25,7 @@ Auth: Google login via Supabase.
 | MemReel — Memory Entropy | https://memreel.atomships.space | Memory Entropy explainer. Next.js, public + noindex. Kitchen: spacebuilder13/atomships apps/memreel. Vercel atomships-memreel. Retired film in archive/conversation-film/. | 2026-09-12 |
 | Spaceships & Atoms — homepage | https://atomships.space | Public noindex film. Static HTML. Kitchen: spacebuilder13/atomships apps/www. Until DNS: https://atomships-www.vercel.app | 2026-08-16 |
 | The Lab — partner door | https://lab.atomships.space | Named-cookie office map for Jash. Not a client window. Kitchen: spacebuilder13/atomships apps/lab. Vercel atomships-lab. Until DNS: https://atomships-lab.vercel.app | 2026-09-07 |
-| Cava — client door | https://cava.atomships.space | Passphrase-gated door for Ria Mittal / Cava Athleisure. Static HTML, public + noindex. One door only. Kitchen: spacebuilder13/atomships apps/cava. Vercel atomships-cava. Until DNS: https://atomships-cava.vercel.app | 2026-09-11 |
+| Cava — client door | https://cava.atomships.space | Passphrase-gated door for Ria Mittal / Cava Athleisure. Static HTML, public + noindex. One door only. Door: spacebuilder13/atomships apps/cava. Product kitchen: spacebuilder13/project-cava. Vercel atomships-cava. Until DNS: https://atomships-cava.vercel.app | 2026-09-11 |
 
 ---
 

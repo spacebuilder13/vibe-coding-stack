@@ -200,8 +200,22 @@
       "engagement_phase": "conversation",
       "client_poc": "Ria Mittal",
       "confidential": true,
-      "last_verified": "2026-09-11",
-      "notes": "Passphrase-gated client door for Ria Mittal / Cava Athleisure. Kitchen window: atomships/apps/cava → Vercel atomships-cava → cava.atomships.space. Public URL + noindex. One door only — not a client prototype on a second subdomain. Do not copy ember-ecosystem or apps/lab. Do not change nameservers; add CNAME cava only. Do not name Cava on apps/www."
+      "last_verified": "2026-09-17",
+      "notes": "Passphrase-gated client door for Ria Mittal / Cava Athleisure. Door in atomships: apps/cava → Vercel atomships-cava → cava.atomships.space. Product kitchen: spacebuilder13/project-cava (memory, experiments, future apps — not a second subdomain). Public URL + noindex. One door only. Do not copy ember-ecosystem or apps/lab. Do not change nameservers; CNAME cava only. Do not name Cava on apps/www."
+    },
+    {
+      "id": "project-cava",
+      "title": "Project Cava — kitchen",
+      "type": "repo",
+      "repo": "spacebuilder13/project-cava",
+      "local_path": "/Users/jarvis/Documents/Builder/project-cava",
+      "engagement_phase": "kitchen",
+      "client_poc": "Ria Mittal",
+      "confidential": true,
+      "last_verified": "2026-09-17",
+      "url": "https://cava.atomships.space",
+      "url_vercel": "https://atomships-cava.vercel.app",
+      "notes": "Cava product kitchen (memory, experiments, future apps). Private GitHub. Share door stays in atomships/apps/cava → Vercel atomships-cava → cava.atomships.space. Not a second subdomain. Do not attach a second CNAME. Empty kernel — no apps yet."
     },
     {
       "id": "project-ember",
